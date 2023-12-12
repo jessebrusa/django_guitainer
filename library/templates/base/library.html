@@ -1,0 +1,13 @@
+{% extends 'base/main.html' %}
+
+{% block content %}
+    <h1>Song List</h1>
+    <hr>
+    <ul>
+        {% for song in song_list %}
+            <li>Title: {{ song.title }}</li>
+            <li>Artist: {{ song.artist }}</li>
+            <hr>
+        {% endfor %}
+    </ul>
+{% endblock %}
