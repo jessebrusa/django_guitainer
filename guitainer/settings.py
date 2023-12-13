@@ -41,6 +41,7 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'guitainer.urls'
 
 CSP_FRAME_ANCESTORS = ("'self'", "http://127.0.0.1:8000/")
+CSP_IMG_SRC = ("'self'", "*")
 
 TEMPLATES = [
     {
