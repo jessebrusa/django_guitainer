@@ -1,6 +1,7 @@
 {% extends 'base/main.html' %}
 
 {% block content %}
+<a href="{% url 'library' %}">Back to song list</a>
     <ul>
         <li>Title: {{ song.title }}</li>
         <li>Artist: {{ song.artist }}</li>
