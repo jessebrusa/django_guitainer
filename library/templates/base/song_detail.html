@@ -1,15 +1,54 @@
 {% extends 'base/main.html' %}
 
 {% block content %}
-<a href="{% url 'library' %}">Back to song list</a>
+
+    <a href="{% url 'library' %}">Back to song list</a>
+
     <ul>
         <li>Title: {{ song.title }}</li>
-        <li>Artist: {{ song.artist }}</li>
-        <li><img src="{{ song.songurl.img_url }}" alt="picture of song from google"></li>
+
+        {% if song.artist %}
+            <li>Artist: {{ song.artist }}</li>
+        {% endif %}
+
+        {% if song.songurl.img %}
+            <li><img src="{{ song.songurl.img }}" alt="picture of song from google"></li>
+        {% else %}
+            <li>No Image Found</li>
+        {% endif %}
+
         <hr>
-        <li>Mp3:<audio controls src="{{ song.songurl.mp3_url }}"></audio></li>
-        <li>Video:<video controls src="{{ song.songurl.karaoke_url }}"></video></li>
-        <li>Lyrics: {{ song.lyrics|linebreaks }}</li>
-        <li>Tab:<embed src="{{ song.songurl.tab_url }}" type="application/pdf" width="100%" height="1200px"></li>
+
+        {% if song.songurl.mp3 %}
+            <li>Mp3:<audio controls src="{{ song.songurl.mp3 }}"></audio></li>
+        {% elif song.songattempt.mp3 %}
+            <li>No Mp3 Found</li>
+        {% else %}
+            <li>Get Mp3</li>
+        {% endif %}
+
+        {% if song.songurl.karaoke %}
+            <li>Karaoke:<video controls src='{{ song.songurl.karaoke }}'></video></li>
+        {% elif song.songattempt.karaoke %}
+            <li>No Karaoke Found</li>
+        {% else %}
+            <li>Get Karaoke</li>
+        {% endif %}
+
+        {% if song.lyrics %}
+            <li>Lyrics: {{ song.lyrics|linebreaks }}</li>
+        {% elif song.songattempt.lyric %}
+            <li>No Lyrics Found</li>
+        {% else %}
+            <li>Get Lyrics</li>
+        {% endif %}
+
+        {% if song.songurl.tab %}
+            <li>Tab:<embed src="{{ song.songurl.tab }}" type="application/pdf" width="100%" height="1200px"></li>
+        {% elif song.songattempt.tab %}
+            <li>No Tab Found</li>
+        {% else %}
+            <li>Get Tab</li>
+        {% endif %}
     </ul>
 {% endblock %}

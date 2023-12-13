@@ -7,7 +7,7 @@
         {% for song in song_list %}
             <li>Title: {{ song.title }}</li>
             <li>Artist: {{ song.artist }}</li>
-            <li><img src="{{ song.songurl.img_url }}" alt="picture of song from google"></li>
+            <li><img src="{{ song.songurl.img }}" alt="picture of song from google"></li>
             <li><a href="{% url 'song_detail' song.id %}">View Song</a></li>
             <hr>
         {% endfor %}
