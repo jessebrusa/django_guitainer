@@ -4,6 +4,7 @@ class Song(models.Model):
     id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=255, unique=True)
     artist = models.CharField(max_length=255, null=True)
+    lyrics = models.TextField(null=True)
 
     def __str__(self):
         return self.title
@@ -11,7 +12,6 @@ class Song(models.Model):
 
 class SongUrl(models.Model):
     id = models.OneToOneField(Song, on_delete=models.CASCADE, primary_key=True)
-    lyric_url = models.CharField(max_length=255, null=True)
     mp3_url = models.CharField(max_length=255, null=True)
     karaoke_url = models.CharField(max_length=255, null=True)
     tab_url = models.CharField(max_length=255, null=True)

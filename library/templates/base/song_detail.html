@@ -1,0 +1,14 @@
+{% extends 'base/main.html' %}
+
+{% block content %}
+    <ul>
+        <li>Title: {{ song.title }}</li>
+        <li>Artist: {{ song.artist }}</li>
+        <li><img src="{{ song.songurl.img_url }}" alt="picture of song from google"></li>
+        <hr>
+        <li>Mp3:<audio controls src="{{ song.songurl.mp3_url }}"></audio></li>
+        <li>Video:<video controls src="{{ song.songurl.karaoke_url }}"></video></li>
+        <li>Lyrics: {{ song.lyrics|linebreaks }}</li>
+        <li>Tab:<embed src="{{ song.songurl.tab_url }}" type="application/pdf" width="100%" height="1200px"></li>
+    </ul>
+{% endblock %}
