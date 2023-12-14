@@ -9,32 +9,20 @@
                 <p>Title: {{ song.title }}<p>
                 <p>Artist: {{ song.artist }}</p>
                 <p><img src="{{ song.songurl.img }}" alt="picture of song from google"></p>  
-                <button class="add-to-library" data-song-id="{{ song.id }}">Add to library</button>
+                <p><a href="{% url 'song_detail' song.id %}">View Song</a></p>
+                <button class="remove-from-library" data-song-id="{{ song.id }}" data-song-title="{{ song.title }}">Add to Library</button>                
                 <hr>
             </li>   
         {% endfor %}
     </ul>
 
+    {% load static %}
+    <script src="{% static 'js/main.js' %}"></script>
     <script>
-        document.querySelectorAll('.add-to-library').forEach(function(button) {
-            button.addEventListener('click', function() {
-                var songId = this.dataset.songId;
-                fetch('/add-to-library/' + songId + '/', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRFToken': '{{ csrf_token }}'
-                    },
-                    body: JSON.stringify({})
-                }).then(function(response) {
-                    return response.json();
-                }).then(function(data) {
-                    if (data.status === 'success') {
-                        var songElement = document.querySelector('[data-song-id="' + songId + '"]');
-                        songElement.remove();
-                    }
-                });
-            });
-        });
+        var csrftoken = "{{ csrf_token }}";
+
+        window.onload = function () {
+            handleSongRemoval(csrftoken, 'catalogue');
+        };
     </script>
 {% endblock %}

@@ -48,4 +48,10 @@ class SongDetailView(LoginRequiredMixin, DetailView):
     def get_queryset(self):
         return Song.objects.select_related('songurl', 'songattempt')
     
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['is_in_library'] = UserSong.objects.filter(user=self.request.user, song=self.object).exists()
+        return context
+    
 
