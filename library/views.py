@@ -1,7 +1,9 @@
 from django.views.generic import ListView, DetailView
+from django.contrib.auth.mixins import LoginRequiredMixin
+
 from .models import Song
 
-class LibraryView(ListView):
+class LibraryView(LoginRequiredMixin, ListView):
     model = Song
     template_name = 'base/library.html' 
     context_object_name = 'song_list'
@@ -10,7 +12,7 @@ class LibraryView(ListView):
         return Song.objects.select_related('songurl')
 
 
-class CatalogueView(ListView):
+class CatalogueView(LoginRequiredMixin, ListView):
     model = Song
     template_name = 'base/library.html' 
     context_object_name = 'song_list'
@@ -19,7 +21,7 @@ class CatalogueView(ListView):
         return Song.objects.select_related('songurl')
 
 
-class SongDetailView(DetailView):
+class SongDetailView(LoginRequiredMixin, DetailView):
     model = Song
     template_name = 'base/song_detail.html'
     context_object_name = 'song'
