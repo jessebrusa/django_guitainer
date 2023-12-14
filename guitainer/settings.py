@@ -42,8 +42,9 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'guitainer.urls'
 
 CSP_FRAME_ANCESTORS = ("'self'", "http://127.0.0.1:8000/")
-CSP_IMG_SRC = ("'self'", "*")
+CSP_IMG_SRC = ("*",)
 CSP_MEDIA_SRC = ("'self'", "https://storage.googleapis.com")
+CSP_SCRIPT_SRC = ("'self'", "'unsafe-inline'")
 
 DEFAULT_FILE_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
 GS_BUCKET_NAME = 'guitainer'

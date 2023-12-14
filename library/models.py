@@ -1,4 +1,6 @@
 from django.db import models
+from django.contrib.auth.models import User
+from django.db import models
 
 class Song(models.Model):
     id = models.AutoField(primary_key=True)
@@ -37,3 +39,11 @@ class SongSearch(models.Model):
 
     def __str__(self):
         return self.song_id.title
+    
+
+class UserSong(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    song = models.ForeignKey(Song, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"{self.user.username} - {self.song.title}"

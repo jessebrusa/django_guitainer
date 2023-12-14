@@ -51,4 +51,28 @@
             <li>Get Tab</li>
         {% endif %}
     </ul>
+
+    <button class="remove-from-library" data-song-id="{{ song.id }}">Remove From Library</button>
+
+    <script>
+        document.querySelectorAll('.remove-from-library').forEach(function(button) {
+            button.addEventListener('click', function() {
+                var songId = this.dataset.songId;
+                fetch('/remove-from-library/' + songId + '/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': '{{ csrf_token }}'
+                    },
+                    body: JSON.stringify({})
+                }).then(function(response) {
+                    return response.json();
+                }).then(function(data) {
+                    if (data.status === 'success') {
+                        alert('Song Removed from Library!');
+                    }
+                });
+            });
+        });
+    </script>
 {% endblock %}

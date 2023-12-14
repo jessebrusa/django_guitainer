@@ -7,8 +7,31 @@
         {% for song in song_list %}
             <li>Title: {{ song.title }}</li>
             <li>Artist: {{ song.artist }}</li>
-            <li><img src="{{ song.songurl.img_url }}" alt="picture of song from google"></li>
+            <li><img src="{{ song.songurl.img }}" alt="picture of song from google"></li>  
+            <button class="add-to-library" data-song-id="{{ song.id }}">Add to library</button>
             <hr>
         {% endfor %}
     </ul>
+
+    <script>
+        document.querySelectorAll('.add-to-library').forEach(function(button) {
+            button.addEventListener('click', function() {
+                var songId = this.dataset.songId;
+                fetch('/add-to-library/' + songId + '/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': '{{ csrf_token }}'
+                    },
+                    body: JSON.stringify({})
+                }).then(function(response) {
+                    return response.json();
+                }).then(function(data) {
+                    if (data.status === 'success') {
+                        alert('Song added to library!');
+                    }
+                });
+            });
+        });
+    </script>
 {% endblock %}
