@@ -5,11 +5,13 @@
     <hr>
     <ul>
         {% for song in song_list %}
-            <li>Title: {{ song.title }}</li>
-            <li>Artist: {{ song.artist }}</li>
-            <li><img src="{{ song.songurl.img }}" alt="picture of song from google"></li>  
-            <button class="add-to-library" data-song-id="{{ song.id }}">Add to library</button>
-            <hr>
+            <li data-song-id="{{ song.id }}">
+                <p>Title: {{ song.title }}<p>
+                <p>Artist: {{ song.artist }}</p>
+                <p><img src="{{ song.songurl.img }}" alt="picture of song from google"></p>  
+                <button class="add-to-library" data-song-id="{{ song.id }}">Add to library</button>
+                <hr>
+            </li>   
         {% endfor %}
     </ul>
 
@@ -28,7 +30,8 @@
                     return response.json();
                 }).then(function(data) {
                     if (data.status === 'success') {
-                        alert('Song added to library!');
+                        var songElement = document.querySelector('[data-song-id="' + songId + '"]');
+                        songElement.remove();
                     }
                 });
             });

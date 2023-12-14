@@ -5,12 +5,14 @@
     <hr>
     <ul>
         {% for song in song_list %}
-            <li>Title: {{ song.title }}</li>
-            <li>Artist: {{ song.artist }}</li>
-            <li><img src="{{ song.songurl.img }}" alt="picture of song from google"></li>
-            <li><a href="{% url 'song_detail' song.id %}">View Song</a></li>
-            <button class="remove-from-library" data-song-id="{{ song.id }}">Remove From Library</button>
-            <hr>
+            <li data-song-id="{{ song.id }}">
+                <p>Title: {{ song.title }}</p>
+                <p>Artist: {{ song.artist }}</p>
+                <p><img src="{{ song.songurl.img }}" alt="picture of song from google"></p>
+                <p><a href="{% url 'song_detail' song.id %}">View Song</a></p>
+                <button class="remove-from-library" data-song-id="{{ song.id }}">Remove From Library</button>
+                <hr>
+            </li>
         {% endfor %}
     </ul>
 
@@ -29,7 +31,8 @@
                     return response.json();
                 }).then(function(data) {
                     if (data.status === 'success') {
-                        alert('Song Removed from Library!');
+                        var songElement = document.querySelector('[data-song-id="' + songId + '"]');
+                        songElement.remove();
                     }
                 });
             });
