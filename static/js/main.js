@@ -1,4 +1,4 @@
-function handleSongRemoval(csrf_token, locationName) {
+function handleSongRemoval(csrf_token, addRemove) {
     document.querySelectorAll('.remove-from-library').forEach(function(button) {
         button.addEventListener('click', function() {
             var songId = this.dataset.songId;
@@ -7,7 +7,12 @@ function handleSongRemoval(csrf_token, locationName) {
             let body = document.body;
             let confirmDiv = document.createElement('div');
             let confirmText = document.createElement('p');
-            confirmText.textContent = `Are you sure you want to remove ${songTitle} from your ${locationName}?`;
+            if (addRemove === 'add') {
+                confirmText.textContent = `Are you sure you want to add ${songTitle} to your library?`;
+            } 
+            else {
+                confirmText.textContent = `Are you sure you want to remove ${songTitle} from your library?`;
+            }
             let buttonDiv = document.createElement('div');
             let confirmButtonYes = document.createElement('button');
             confirmButtonYes.textContent = 'Yes';
@@ -19,9 +24,16 @@ function handleSongRemoval(csrf_token, locationName) {
             confirmDiv.appendChild(buttonDiv);
             buttonDiv.appendChild(confirmButtonYes);
             buttonDiv.appendChild(confirmButtonNo);
+            
+            if (addRemove === 'add') {
+                postUrl = '/add-to-library/';
+            }
+            else {
+                postUrl = '/remove-from-library/';
+            }
 
             confirmButtonYes.addEventListener('click', function() {
-                fetch('/remove-from-library/' + songId + '/', {
+                fetch(postUrl + songId + '/', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

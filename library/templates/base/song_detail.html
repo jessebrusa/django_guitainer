@@ -4,56 +4,71 @@
 
     <a href="{% url 'library' %}">Back to song list</a>
 
-    <ul>
-        <li>Title: {{ song.title }}</li>
+    <h1>Title: {{ song.title }}</h1>
 
-        {% if song.artist %}
-            <li>Artist: {{ song.artist }}</li>
-        {% endif %}
+    {% if song.artist %}
+        <h2>Artist: {{ song.artist }}</h2>
+    {% endif %}
 
-        {% if song.songurl.img %}
-            <li><img src="{{ song.songurl.img }}" alt="picture of song from google"></li>
-        {% else %}
-            <li>No Image Found</li>
-        {% endif %}
+    {% if song.songurl.img %}
+        <img src="{{ song.songurl.img }}" alt="picture of song from google">
+    {% else %}
+        No Image Found
+    {% endif %}
 
-        <hr>
+    <hr>
 
-        {% if song.songurl.mp3 %}
-            <li>Mp3:<audio controls src="{{ song.songurl.mp3 }}"></audio></li>
-        {% elif song.songattempt.mp3 %}
-            <li>No Mp3 Found</li>
-        {% else %}
-            <li>Get Mp3</li>
-        {% endif %}
 
-        {% if song.songurl.karaoke %}
-            <li>Karaoke:<video controls src='{{ song.songurl.karaoke }}'></video></li>
-        {% elif song.songattempt.karaoke %}
-            <li>No Karaoke Found</li>
-        {% else %}
-            <li>Get Karaoke</li>
-        {% endif %}
+    <div class="accordion">
+        <button class="accordion-button">Mp3</button>
+        <div class="accordion-content">
+            {% if song.songurl.mp3 %}
+                <audio controls src="{{ song.songurl.mp3 }}"></audio>
+            {% elif song.songattempt.mp3 %}
+                <p>No Mp3 Found</p>
+            {% else %}
+                <p>Get Mp3</p>
+            {% endif %}
+        </div>
+    
+        <button class="accordion-button">Karaoke</button>
+        <div class="accordion-content">
+            {% if song.songurl.karaoke %}
+                <video controls src='{{ song.songurl.karaoke }}'></video>
+            {% elif song.songattempt.karaoke %}
+                <p>No Karaoke Found</p>
+            {% else %}
+                <p>Get Karaoke</p>
+            {% endif %}
+        </div>
 
-        {% if song.lyrics %}
-            <li>Lyrics: {{ song.lyrics|linebreaks }}</li>
-        {% elif song.songattempt.lyric %}
-            <li>No Lyrics Found</li>
-        {% else %}
-            <li>Get Lyrics</li>
-        {% endif %}
-
-        {% if song.songurl.tab %}
-            <li>Tab:<embed src="{{ song.songurl.tab }}" type="application/pdf" width="100%" height="1200px"></li>
-        {% elif song.songattempt.tab %}
-            <li>No Tab Found</li>
-        {% else %}
-            <li>Get Tab</li>
-        {% endif %}
-    </ul>
+        <button class="accordion-button">Lyrics</button>
+        <div class="accordion-content">
+            {% if song.lyric %}
+                <li>Lyrics: {{ song.lyric|linebreaks }}</li>
+            {% elif song.songattempt.lyric %}
+                <li>No Lyrics Found</li>
+            {% else %}
+                <li>Get Lyrics</li>
+            {% endif %}
+        </div>
+        
+        <button class="accordion-button">Tabs</button>
+        <div class="accordion-content">
+            {% if song.songurl.tab %}
+                <li>Tab:<embed src="{{ song.songurl.tab }}" type="application/pdf" width="100%" height="1200px"></li>
+            {% elif song.songattempt.tab %}
+                <li>No Tab Found</li>
+            {% else %}
+                <li>Get Tab</li>
+            {% endif %}
+        </div>
+    </div>
 
     {% if is_in_library %}
         <button class="remove-from-library" data-song-id="{{ song.id }}" data-song-title="{{ song.title }}">Remove from Library</button>
+    {% else %}
+        <button class="remove-from-library" data-song-id="{{ song.id }}" data-song-title="{{ song.title }}">Add to Library</button>   
     {% endif %}
 
     {% load static %}
@@ -62,7 +77,21 @@
         var csrftoken = "{{ csrf_token }}";
 
         window.onload = function () {
-            handleSongRemoval(csrftoken, 'library');
+            handleSongRemoval(csrftoken, 'remove');
         };
+
+        document.querySelectorAll('.accordion-button').forEach(function(button) {
+            button.addEventListener('click', function() {
+                var content = this.nextElementSibling;
+
+                if (content.style.maxHeight) {
+                    // If the accordion is open, close it
+                    content.style.maxHeight = null;
+                } else {
+                    // If the accordion is closed, open it
+                    content.style.maxHeight = content.scrollHeight + "px";
+                }
+            });
+        });
     </script>
 {% endblock %}
