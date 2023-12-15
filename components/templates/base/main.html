@@ -4,12 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/x-icon" href="{% static 'images/guitar.ico' %}" />
+    <link rel="icon" type="image/x-icon" href="{% static 'images/guitar.ico' %}" />  
     <link rel="stylesheet" href="{% static 'css/stylesheet.css' %}">
-    <title>Document</title>
+    <title>Guitainer</title>
 </head>
 <body>
+    {% include 'base/nav.html' %}
     {% block content %}
     {% endblock %}
+    {% include 'base/footer.html' %}
 </body>
 </html>

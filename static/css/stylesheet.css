@@ -3,3 +3,24 @@
     overflow: hidden;
     transition: max-height 0.3s ease-out;
 }
+
+.custom-dropdown {
+    display: none;
+}
+
+.custom-dropdown.show {
+    display: block;
+}
+/* Hide the first navbar on screens smaller than 800px */
+@media (max-width: 799px) {
+    .navbar.d-none.d-lg-block {
+        display: none !important;
+    }
+}
+
+/* Hide the second navbar on screens larger than 800px */
+@media (min-width: 800px) {
+    .navbar.d-lg-none {
+        display: none !important;
+    }
+}

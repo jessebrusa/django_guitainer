@@ -58,3 +58,8 @@ function handleSongRemoval(csrf_token, addRemove) {
     });
 }
 
+
+document.getElementById('dropdownButton').addEventListener('click', function() {
+    var dropdownMenu = document.getElementById('dropdownMenu');
+    dropdownMenu.classList.toggle('show');
+});
