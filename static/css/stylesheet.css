@@ -12,14 +12,14 @@
     display: block;
 }
 /* Hide the first navbar on screens smaller than 800px */
-@media (max-width: 799px) {
+@media (max-width: 599px) {
     .navbar.d-none.d-lg-block {
         display: none !important;
     }
 }
 
 /* Hide the second navbar on screens larger than 800px */
-@media (min-width: 800px) {
+@media (min-width: 600px) {
     .navbar.d-lg-none {
         display: none !important;
     }
