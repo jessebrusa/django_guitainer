@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     'library',
     'login',
     'components',
+    'obtain'
 ]
 
 MIDDLEWARE = [

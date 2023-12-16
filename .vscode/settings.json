@@ -1,12 +1,16 @@
 {
     "cSpell.words": [
+        "csrftoken",
+        "domcontentloaded",
         "gcloud",
         "Guitainer",
         "kghtc",
         "ngfn",
         "saam",
+        "similiarity",
         "songattempt",
         "songurl",
+        "textdistance",
         "usersong"
     ]
 }

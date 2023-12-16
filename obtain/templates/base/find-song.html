@@ -1,0 +1,76 @@
+{% extends 'base/main.html' %}
+
+{% block content %}
+    <form>
+        <label for="title-input">Title:</label>
+        <input type="text" id="title-input" name="title-input"><br><br>
+
+        <label for="artist-input">Artist:</label>
+        <input type="text" id="artist-input" name="artist-input"><br><br>
+
+        <label for="lyrics-boolean">Include Lyrics:</label>
+        <input type="checkbox" id="lyrics-boolean" name="lyrics-boolean"><br><br>
+
+        <label for="mp3-boolean">Include MP3:</label>
+        <input type="checkbox" id="mp3-boolean" name="mp3-boolean"><br><br>
+
+        <label for="karaoke-boolean">Include Karaoke:</label>
+        <input type="checkbox" id="karaoke-boolean" name="karaoke-boolean"><br><br>
+
+        <label for="tab-boolean">Include Tab:</label>
+        <input type="checkbox" id="tab-boolean" name="tab-boolean"><br><br>
+
+        <button type="submit" value="Submit">Submit</button>
+    </form>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var csrftoken = "{{ csrf_token }}";
+            var form = document.querySelector('form');
+            form.addEventListener('submit', function(event) {
+                event.preventDefault();
+                var title = document.getElementById('title-input').value;
+                var artist = document.getElementById('artist-input').value;
+                var lyrics = document.getElementById('lyrics-boolean').checked;
+                var mp3 = document.getElementById('mp3-boolean').checked;
+                var karaoke = document.getElementById('karaoke-boolean').checked;
+                var tab = document.getElementById('tab-boolean').checked;
+                
+                console.log(title);
+                console.log(artist);
+                console.log(lyrics);
+                console.log(mp3);
+                console.log(karaoke);
+                console.log(tab);
+
+                fetch('/song-search/' + title, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': csrftoken
+                    },
+                    body: JSON.stringify({
+                        title: title,
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    if (data.song_id) {
+                        var url = "/song/" + data.song_id;
+                        console.log(url);
+                        window.location.href = url;
+                    } 
+                    else {
+                        fetch('/correct-title-artist?title=' + encodeURIComponent(title) + '&artist=' + encodeURIComponent(artist))
+                        .then(response => response.json())
+                        .then(data => {
+                            console.log(data);
+                            // Handle the response here...
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+{% endblock %}

@@ -3,7 +3,7 @@
     <ul class="navbar-nav">
         {% if user.is_authenticated %}
             <li class="nav-item"><a class="nav-link" href="#">Dashboard</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">Find Song</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'find-song' %}">Find Song</a></li>
             {% if request.path == '/library/' %}
                 <li class="nav-item"><a class="nav-link" href="{% url 'catalogue' %}">Catalogue</a></li>
             {% else %}
@@ -33,7 +33,7 @@
             </button>
             <ul class="dropdown-menu custom-dropdown" id="dropdownMenu">
                 {% if user.is_authenticated %}
-                    <li class="nav-item"><a class="nav-link" href="#">Find Song</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'find-song' %}">Find Song</a></li>
                     {% if request.path == '/library/' %}
                         <li class="nav-item"><a class="nav-link" href="{% url 'catalogue' %}">Catalogue</a></li>
                     {% else %}
