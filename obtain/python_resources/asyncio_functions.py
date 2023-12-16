@@ -1,6 +1,6 @@
 import asyncio
 from python_resources.sql import *
-from python_resources.resources import download_song, download_karaoke
+from obtain.python_resources.old_resources import download_song, download_karaoke
 from python_resources.tab_scraper import TabScraper
 
 

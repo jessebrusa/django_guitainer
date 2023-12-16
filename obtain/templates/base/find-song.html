@@ -3,7 +3,7 @@
 {% block content %}
     <form>
         <label for="title-input">Title:</label>
-        <input type="text" id="title-input" name="title-input"><br><br>
+        <input type="text" id="title-input" name="title-input" required><br><br>
 
         <label for="artist-input">Artist:</label>
         <input type="text" id="artist-input" name="artist-input"><br><br>
@@ -23,6 +23,8 @@
         <button type="submit" value="Submit">Submit</button>
     </form>
 
+    {% load static %}
+    <script src="{% static 'js/main.js' %}"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             var csrftoken = "{{ csrf_token }}";
@@ -43,16 +45,8 @@
                 console.log(karaoke);
                 console.log(tab);
 
-                fetch('/song-search/' + title, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRFToken': csrftoken
-                    },
-                    body: JSON.stringify({
-                        title: title,
-                    })
-                })
+
+                fetch('/song-search/?song_title=' + encodeURIComponent(title))
                 .then(response => response.json())
                 .then(data => {
                     console.log(data);
@@ -66,7 +60,33 @@
                         .then(response => response.json())
                         .then(data => {
                             console.log(data);
-                            // Handle the response here...
+
+                            if (data.song_id) {
+                                var songId = data.song_id;
+                                var songPageUrl = "/song/" + data.song_id;
+                                console.log(songPageUrl);
+                            } 
+                            else {
+                                alert("No song found alert");
+                                return;
+                            }
+
+
+                            var title = encodeURIComponent(data.correct_title);  
+                            var artist = encodeURIComponent(data.correct_artist);  
+
+                            var imgUrl = '/obtain-img/?song_id=' + songId + '&title=' + title + '&artist=' + artist;
+
+                            if (lyrics) {
+                                var lyricsUrl = '/obtain-lyrics/?song_id=' + songId + '&title=' + title + '&artist=' + artist;
+                            } else {
+                                var lyricsUrl = null;
+                            }
+
+                            var urls = [imgUrl, lyricsUrl];  
+
+                            fetchUrls(urls, imgUrl, lyricsUrl);
+
                         });
                     }
                 });

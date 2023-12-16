@@ -63,3 +63,39 @@ document.getElementById('dropdownButton').addEventListener('click', function() {
     var dropdownMenu = document.getElementById('dropdownMenu');
     dropdownMenu.classList.toggle('show');
 });
+
+
+async function fetchUrls(urls, imgUrl, lyricsUrl) {
+    var promises = urls.map(async url => {
+        if (url !== null) {
+            try {
+                let response = await fetch(url);
+                let data = await response.json();
+                console.log(`Response from ${url}:`, data);
+
+                if (url === imgUrl) {
+                    if (response.ok) {
+                        alert('img success');
+                    } else {
+                        alert('img failure');
+                    }
+                } else if (url === lyricsUrl) {
+                    if (response.ok) {
+                        alert('Lyrics success');
+                    } else {
+                        alert('Lyrics failure');
+                    }
+                }
+
+                return data;
+            } catch (error) {
+                console.error(`Error from ${url}:`, error);
+            }
+        }
+    });
+
+    var results = await Promise.allSettled(promises);
+    console.log('All fetches are complete');
+    // Redirect after all fetches are complete
+    // window.location.href = url;
+}
