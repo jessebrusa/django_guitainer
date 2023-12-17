@@ -113,5 +113,51 @@ class ObtainLyricsView(View):
             song_attempt.lyric = True
             song_attempt.save()
 
-
         return JsonResponse({'status': 'success'})
+    
+
+class ObtainMp3View(View):
+    def get(self, request, *args, **kwargs):
+        song_id = request.GET.get('song_id', None)
+        title = request.GET.get('title', None)
+        artist = request.GET.get('artist', None)
+
+        mp3_url = download_and_upload_mp3(title, artist)
+
+        if mp3_url:
+            song_url = SongUrl.objects.get(id=song_id)
+            song_url.mp3 = mp3_url
+            song_url.save()
+
+            song_attempt = SongAttempt.objects.get(id=song_id)
+            song_attempt.mp3 = True
+            song_attempt.save()
+
+            return JsonResponse({'status': 'success'})
+
+        else:
+            return JsonResponse({'status': 'failure'})
+        
+
+class ObtainKaraokeView(View):
+    def get(self, request, *args, **kwargs):
+        song_id = request.GET.get('song_id', None)
+        title = request.GET.get('title', None)
+
+        karaoke_url = download_and_upload_karaoke(title)
+
+        if karaoke_url:
+            song_url = SongUrl.objects.get(id=song_id)
+            song_url.karaoke = karaoke_url
+            song_url.save()
+
+            song_attempt = SongAttempt.objects.get(id=song_id)
+            song_attempt.karaoke = True
+            song_attempt.save()
+
+            return JsonResponse({'status': 'success'})
+
+        else:
+            return JsonResponse({'status': 'failure'})
+        
+

@@ -65,7 +65,7 @@ document.getElementById('dropdownButton').addEventListener('click', function() {
 });
 
 
-async function fetchUrls(urls, imgUrl, lyricsUrl) {
+async function fetchUrls(urls, imgUrl, lyricsUrl, mp3Url, karaokeUrl) {
     var promises = urls.map(async url => {
         if (url !== null) {
             try {
@@ -75,15 +75,27 @@ async function fetchUrls(urls, imgUrl, lyricsUrl) {
 
                 if (url === imgUrl) {
                     if (response.ok) {
-                        alert('img success');
+                        console.log('img success');
                     } else {
-                        alert('img failure');
+                        console.log('img failure');
                     }
                 } else if (url === lyricsUrl) {
                     if (response.ok) {
-                        alert('Lyrics success');
+                        console.log('Lyrics success');
                     } else {
-                        alert('Lyrics failure');
+                        console.log('Lyrics failure');
+                    }
+                } else if (url === mp3Url) {
+                    if (response.ok) {
+                        console.log('Mp3 success');
+                    } else {
+                        console.log('Mp3 failure');
+                    }
+                } else if (url === karaokeUrl) {
+                    if (response.ok) {
+                        console.log('Karaoke success');
+                    } else {
+                        console.log('Karaoke failure');
                     }
                 }
 

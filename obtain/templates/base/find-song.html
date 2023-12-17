@@ -77,15 +77,24 @@
 
                             var imgUrl = '/obtain-img/?song_id=' + songId + '&title=' + title + '&artist=' + artist;
 
+                            var lyricsUrl = null;
                             if (lyrics) {
                                 var lyricsUrl = '/obtain-lyrics/?song_id=' + songId + '&title=' + title + '&artist=' + artist;
-                            } else {
-                                var lyricsUrl = null;
-                            }
+                            } 
 
-                            var urls = [imgUrl, lyricsUrl];  
+                            var mp3Url = null;
+                            if (mp3) {
+                                var mp3Url = '/obtain-mp3/?song_id=' + songId + '&title=' + title + '&artist=' + artist;
+                            } 
 
-                            fetchUrls(urls, imgUrl, lyricsUrl);
+                            var karaokeUrl = null;
+                            if (karaoke) {
+                                var karaokeUrl = '/obtain-karaoke/?song_id=' + songId + '&title=' + title;
+                            } 
+
+                            var urls = [imgUrl, lyricsUrl, mp3Url, karaokeUrl];  
+
+                            fetchUrls(urls, imgUrl, lyricsUrl, mp3Url, karaokeUrl);
 
                         });
                     }

@@ -1,26 +1,70 @@
+from youtubesearchpython import VideosSearch
+from pytube import YouTube
 import requests
 import azapi
 from lyricsgenius import Genius
 import re
 import os
+import certifi
+from google.cloud import storage
+import tempfile
+from dotenv import load_dotenv
+
+load_dotenv()
+GOOGLE_APPLICATION_CREDENTIALS = os.getenv('GOOGLE_APPLICATION_CREDENTIALS')
 
 
-def download_song(title, artist, path):
-    query = f"{title} {artist} audio"
-    try:
-        videos_search = VideosSearch(query, limit=1)
-        video_url = videos_search.result()['result'][0]['link']
-        
-        os.environ['SSL_CERT_FILE'] = certifi.where()
+def download_and_upload_karaoke(title):
+    query = f"{title} karaoke"
 
-        youtube = YouTube(video_url)
-        audio_stream = youtube.streams.filter(only_audio=True).first()
-        audio_stream.download(output_path=path, filename=f'{title}.mp3')
-
-        return True
+    videos_search = VideosSearch(query, limit=1)
+    video_url = videos_search.result()['result'][0]['link']
     
-    except:
-        return False
+    os.environ['SSL_CERT_FILE'] = certifi.where()
+
+    youtube = YouTube(video_url)
+    video_stream = youtube.streams.filter(progressive=True, file_extension='mp4').order_by('resolution').desc().first()
+
+    with tempfile.NamedTemporaryFile(suffix=".mp4", delete=False) as temp_file:
+        video_stream.download(output_path=os.path.dirname(temp_file.name), filename=os.path.basename(temp_file.name))
+
+    client = storage.Client()
+
+    bucket = client.get_bucket('guitainer')
+
+    blob = bucket.blob(f'karaoke/{title}.mp4')
+    blob.upload_from_filename(temp_file.name)
+
+    os.remove(temp_file.name)
+
+    return blob.public_url
+
+
+def download_and_upload_mp3(title, artist):
+    query = f"{title} {artist} audio"
+
+    videos_search = VideosSearch(query, limit=1)
+    video_url = videos_search.result()['result'][0]['link']
+    
+    os.environ['SSL_CERT_FILE'] = certifi.where()
+
+    youtube = YouTube(video_url)
+    audio_stream = youtube.streams.filter(only_audio=True).first()
+
+    with tempfile.NamedTemporaryFile(suffix=".mp3", delete=False) as temp_file:
+        audio_stream.download(output_path=os.path.dirname(temp_file.name), filename=os.path.basename(temp_file.name))
+
+    client = storage.Client()
+
+    bucket = client.get_bucket('guitainer')
+
+    blob = bucket.blob(f'mp3/{title}.mp3')
+    blob.upload_from_filename(temp_file.name)
+
+    os.remove(temp_file.name)
+
+
+    return blob.public_url
 
 
 def get_google_img(query, api_key, cx):

@@ -1,17 +1,25 @@
 {
     "cSpell.words": [
+        "azapi",
+        "Brainz",
+        "certifi",
         "csrftoken",
         "domcontentloaded",
         "dotenv",
         "gcloud",
         "Guitainer",
+        "img",
         "kghtc",
+        "lyricsgenius",
         "ngfn",
+        "pytube",
+        "releasedate",
         "saam",
         "similiarity",
         "songattempt",
         "songurl",
         "textdistance",
-        "usersong"
+        "usersong",
+        "youtubesearchpython"
     ]
 }
