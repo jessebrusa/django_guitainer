@@ -4,6 +4,14 @@
 
     <a href="{% url 'library' %}">Back to song list</a>
 
+    {% if is_in_library %}
+        {% if is_favorite %}
+            <button id="favoriteButton" onclick="toggleFavorite(true)">Remove from Favorites</button>
+        {% else %}
+            <button id="favoriteButton" onclick="toggleFavorite(false)">Add to Favorites</button>
+        {% endif %}
+    {% endif %}
+
     <h1>Title: {{ song.title }}</h1>
 
     {% if song.artist %}
@@ -75,6 +83,8 @@
     <script src="{% static 'js/main.js' %}"></script>
     <script>
         var csrftoken = "{{ csrf_token }}";
+        var songId = "{{ song.id }}";
+        var userId = "{{ user.id }}";
 
         window.onload = function () {
             handleSongRemoval(csrftoken, 'remove');
@@ -85,13 +95,36 @@
                 var content = this.nextElementSibling;
 
                 if (content.style.maxHeight) {
-                    // If the accordion is open, close it
                     content.style.maxHeight = null;
                 } else {
-                    // If the accordion is closed, open it
                     content.style.maxHeight = content.scrollHeight + "px";
                 }
             });
         });
+
+        function toggleFavorite(isFavorite) {
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/add-remove-favorite/', true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.setRequestHeader('X-CSRFToken', csrftoken);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    var response = JSON.parse(xhr.responseText);
+                    var favoriteButton = document.getElementById('favoriteButton');
+                    if (response.is_favorite) {
+                        favoriteButton.textContent = 'Remove from Favorites';
+                        favoriteButton.onclick = function() { toggleFavorite(true); };
+                    } else {
+                        favoriteButton.textContent = 'Add to Favorites';
+                        favoriteButton.onclick = function() { toggleFavorite(false); };
+                    }
+                }
+            };
+            xhr.send(JSON.stringify({
+                'song_id': songId,
+                'user_id': userId,
+                'action': isFavorite ? 'remove' : 'add'
+            }));
+        }
     </script>
 {% endblock %}

@@ -1,5 +1,7 @@
 from django.shortcuts import get_object_or_404
 from django.http import JsonResponse
+from django.http import HttpResponse
+import json
 
 from django.views.generic import ListView, DetailView
 from django.views import View
@@ -46,12 +48,29 @@ class SongDetailView(LoginRequiredMixin, DetailView):
     context_object_name = 'song'
 
     def get_queryset(self):
-        return Song.objects.select_related('songurl', 'songattempt')
+        return Song.objects.select_related('songurl', 'songattempt').prefetch_related('usersong_set')
     
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['is_in_library'] = UserSong.objects.filter(user=self.request.user, song=self.object).exists()
+        user_song = UserSong.objects.filter(user=self.request.user, song=self.object).first()
+        context['is_in_library'] = user_song is not None
+        context['is_favorite'] = user_song.favorite if user_song else False
         return context
-    
 
+
+class AddRemoveFavoritesView(LoginRequiredMixin, View):
+    def post(self, request, *args, **kwargs):
+        data = json.loads(request.body)
+        song_id = data.get('song_id', None)
+        user_id = data.get('user_id', None)
+        action = data.get('action', None)
+
+        user_song = UserSong.objects.get(user_id=user_id, song_id=song_id)
+        if action == 'add':
+            user_song.favorite = True
+        else:  
+            user_song.favorite = False
+        user_song.save()
+
+        return JsonResponse({'is_favorite': user_song.favorite})

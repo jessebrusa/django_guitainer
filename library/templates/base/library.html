@@ -9,7 +9,7 @@
                 <p>Title: {{ song.title }}</p>
                 <p>Artist: {{ song.artist }}</p>
                 <p><img src="{{ song.songurl.img }}" alt="picture of song from google"></p>
-                <p><a href="{% url 'song_detail' song.id %}">View Song</a></p>
+                <p><a href="{% url 'song-detail' song.id %}">View Song</a></p>
                 <button class="remove-from-library" data-song-id="{{ song.id }}" data-song-title="{{ song.title }}">Remove from Library</button>                <hr>
             </li>
         {% endfor %}
