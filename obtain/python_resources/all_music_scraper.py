@@ -58,7 +58,7 @@ class AllMusicScraper:
                         correct_performers = correct_performers.strip()[3:]
 
                 artist_elements = soup.find_all('div', class_='artist')
-                if artist_elements:
+                if artist_elements is not None:
                     correct_artist = artist_elements[0].text
                     if 'by ' in correct_artist:
                         correct_artist = correct_artist.strip()[3:]

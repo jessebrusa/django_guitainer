@@ -37,29 +37,18 @@
                 var mp3 = document.getElementById('mp3-boolean').checked;
                 var karaoke = document.getElementById('karaoke-boolean').checked;
                 var tab = document.getElementById('tab-boolean').checked;
-                
-                console.log(title);
-                console.log(artist);
-                console.log(lyrics);
-                console.log(mp3);
-                console.log(karaoke);
-                console.log(tab);
-
 
                 fetch('/song-search/?song_title=' + encodeURIComponent(title))
                 .then(response => response.json())
                 .then(data => {
-                    console.log(data);
                     if (data.song_id) {
                         var url = "/song/" + data.song_id;
-                        console.log(url);
                         window.location.href = url;
                     } 
                     else {
                         fetch('/correct-title-artist?title=' + encodeURIComponent(title) + '&artist=' + encodeURIComponent(artist))
                         .then(response => response.json())
                         .then(data => {
-                            console.log(data);
 
                             if (data.song_id) {
                                 var songId = data.song_id;
@@ -92,10 +81,16 @@
                                 var karaokeUrl = '/obtain-karaoke/?song_id=' + songId + '&title=' + title;
                             } 
 
-                            var urls = [imgUrl, lyricsUrl, mp3Url, karaokeUrl];  
+                            var tabUrl = null;
+                            if (tab) {
+                                var tabUrl = '/obtain-tab/?song_id=' + songId + '&title=' + title;
+                            } 
 
-                            fetchUrls(urls, imgUrl, lyricsUrl, mp3Url, karaokeUrl);
+                            var urls = [imgUrl, lyricsUrl, mp3Url, karaokeUrl, tabUrl];  
 
+                            fetchUrls(urls, imgUrl, lyricsUrl, mp3Url, karaokeUrl, tabUrl).then(() => {
+                                window.location.href = songPageUrl;
+                            });
                         });
                     }
                 });

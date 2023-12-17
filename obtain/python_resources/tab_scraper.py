@@ -78,12 +78,14 @@ class TabScraper:
                 '''
             )
 
-
-            path = f'static/tab/{self.title}.pdf'
+            no_space_title = self.title.replace(' ', '_')
+            path = f'media/tab/{no_space_title}.pdf'
 
             await page.pdf(path=path, scale=0.8)
 
             await browser.close()
+
+            return f'/{path}'
 
     async def run_scrape(self):
         return await self.scrape_link()

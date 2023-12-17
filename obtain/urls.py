@@ -10,4 +10,5 @@ urlpatterns = [
     path('obtain-lyrics/', ObtainLyricsView.as_view(), name='obtain-lyrics'),
     path('obtain-mp3/', ObtainMp3View.as_view(), name='obtain-mp3'),
     path('obtain-karaoke/', ObtainKaraokeView.as_view(), name='obtain-karaoke'),
+    path('obtain-tab/', ObtainTabView.as_view(), name='obtain-tab'),
 ]

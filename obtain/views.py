@@ -4,11 +4,13 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import JsonResponse
 
 from .python_resources.all_music_scraper import AllMusicScraper
+from .python_resources.tab_scraper import TabScraper
 from .python_resources.resources import *
 
 from library.models import Song, SongSearch, UserSong, SongUrl, SongAttempt
 
 import os
+import asyncio
 from dotenv import load_dotenv
 
 
@@ -161,3 +163,33 @@ class ObtainKaraokeView(View):
             return JsonResponse({'status': 'failure'})
         
 
+class ObtainTabView(View):
+    def get(self, request, *args, **kwargs):
+        song_id = request.GET.get('song_id', None)
+        title = request.GET.get('title', None)
+
+
+        scraper = TabScraper(title)
+    
+        loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(loop)
+        
+        try:
+            tab_href = loop.run_until_complete(scraper.run_scrape())
+            tab_url = loop.run_until_complete(scraper.download_pdf(tab_href))
+        finally:
+            loop.close()
+            
+        if tab_url:
+            song_url = SongUrl.objects.get(id=song_id)
+            song_url.tab = tab_url
+            song_url.save()
+
+            song_attempt = SongAttempt.objects.get(id=song_id)
+            song_attempt.tab = True
+            song_attempt.save()
+
+            return JsonResponse({'status': 'success'})
+        
+        else:
+            return JsonResponse({'status': 'failure'})

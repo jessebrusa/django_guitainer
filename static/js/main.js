@@ -65,7 +65,7 @@ document.getElementById('dropdownButton').addEventListener('click', function() {
 });
 
 
-async function fetchUrls(urls, imgUrl, lyricsUrl, mp3Url, karaokeUrl) {
+async function fetchUrls(urls, imgUrl, lyricsUrl, mp3Url, karaokeUrl, tabUrl) {
     var promises = urls.map(async url => {
         if (url !== null) {
             try {
@@ -98,6 +98,13 @@ async function fetchUrls(urls, imgUrl, lyricsUrl, mp3Url, karaokeUrl) {
                         console.log('Karaoke failure');
                     }
                 }
+                else if (url === tabUrl) {
+                    if (response.ok) {
+                        console.log('Tab success');
+                    } else {
+                        console.log('Tab failure');
+                    }
+                }
 
                 return data;
             } catch (error) {
@@ -108,6 +115,4 @@ async function fetchUrls(urls, imgUrl, lyricsUrl, mp3Url, karaokeUrl) {
 
     var results = await Promise.allSettled(promises);
     console.log('All fetches are complete');
-    // Redirect after all fetches are complete
-    // window.location.href = url;
 }
