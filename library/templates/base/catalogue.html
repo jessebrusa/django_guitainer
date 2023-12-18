@@ -9,8 +9,10 @@
                 <p>Title: {{ song.title }}<p>
                 <p>Artist: {{ song.artist }}</p>
                 <p><img src="{{ song.songurl.img }}" alt="picture of song from google"></p>  
-                <p><a href="{% url 'song_detail' song.id %}">View Song</a></p>
-                <button class="remove-from-library" data-song-id="{{ song.id }}" data-song-title="{{ song.title }}">Add to Library</button>                
+                <p><a href="{% url 'song-detail' song.id %}">View Song</a></p>
+                <button class="remove-item" data-item-id="{{ song.id }}" data-item-title="{{ song.title }}" data-item-action="add" data-item-location="library">
+                    Add to Library
+                </button>                
                 <hr>
             </li>   
         {% endfor %}
@@ -22,7 +24,7 @@
         var csrftoken = "{{ csrf_token }}";
 
         window.onload = function () {
-            handleSongRemoval(csrftoken, 'add');
+            handleItemRemoval(csrftoken);
         };
     </script>
 {% endblock %}

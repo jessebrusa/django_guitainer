@@ -1,0 +1,79 @@
+{% extends 'base/main.html' %}
+
+{% block content %}
+    <h1>{{ name }}</h1>
+    <p>{{ message }}</p>
+    <h2>Songs:</h2>
+    <ul>
+        {% for song in songs %}
+            <li>{{ song.title }}</li>
+        {% empty %}
+            <li>No songs in this group.</li>
+        {% endfor %}
+    </ul>
+
+    <h2>Users:</h2>
+    <ul>
+        {% for user in users %}
+            <li>{{ user.username }}</li>
+            {% if is_current_user_admin %}
+                {% if not user.admin %}
+                    <button>Make Admin</button>
+                    <button class="remove-item" data-item-title="{{ user.username }}" data-item-location="{{ name }}">Remove User</button>
+                {% endif %}
+            {% endif %}
+        {% empty %}
+            <li>No users in this group.</li>
+        {% endfor %}
+    </ul>
+
+    {% if is_current_user_admin %}
+        <button id="add-user-button">Add User</button>
+        <button>Edit Group Message</button>
+        <button>Edit Group Name</button>
+    {% endif %} 
+    <button>Leave Group</button>
+    {% if is_current_user_admin %}
+        <button>Delete Group</button>
+    {% endif %}
+
+    <form id="add-user-form" style="display: none;" action="{% url 'add-user' group_id %}" method="post">
+        {% csrf_token %}
+        {{ form }}
+        <label>Add User:</label>
+        <input type="text" name="username"></input>
+        <input type="submit" value="Submit"></input>
+    </form>
+
+    {% load static %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+    <script>
+        var csrftoken = "{{ csrf_token }}";
+
+        $('#add-user-form').on('submit', function(event) {
+            event.preventDefault();
+            var form = $(this);
+            $.ajax({
+                url: form.attr('action'),
+                method: form.attr('method'),
+                data: form.serialize(),
+                success: function(data) {
+                    alert(data.message);
+                    location.reload();
+                },
+                error: function(xhr) {
+                    alert(JSON.parse(xhr.responseText).message);        
+                }
+            });
+        });
+
+        $('#add-user-button').on('click', function() {
+            $('#add-user-form').show();
+        });
+
+        window.onload = function () {
+            handleItemRemoval(csrftoken, 'your library');
+        };
+    </script>
+{% endblock %}

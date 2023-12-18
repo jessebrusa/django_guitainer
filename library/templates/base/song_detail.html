@@ -74,9 +74,13 @@
     </div>
 
     {% if is_in_library %}
-        <button class="remove-from-library" data-song-id="{{ song.id }}" data-song-title="{{ song.title }}">Remove from Library</button>
+        <button class="remove-item" data-item-id="{{ song.id }}" data-item-title="{{ song.title }}" data-item-action="remove" data-item-location="library">
+            Remove from Library
+        </button>
     {% else %}
-        <button class="remove-from-library" data-song-id="{{ song.id }}" data-song-title="{{ song.title }}">Add to Library</button>   
+        <button class="remove-item" data-item-id="{{ song.id }}" data-item-title="{{ song.title }}" data-item-action="add" data-item-location="library">
+            Add to Library
+        </button>   
     {% endif %}
 
     {% load static %}
@@ -87,7 +91,7 @@
         var userId = "{{ user.id }}";
 
         window.onload = function () {
-            handleSongRemoval(csrftoken, 'remove');
+            handleItemRemoval(csrftoken);
         };
 
         document.querySelectorAll('.accordion-button').forEach(function(button) {

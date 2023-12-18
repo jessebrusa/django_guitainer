@@ -1,17 +1,19 @@
-function handleSongRemoval(csrf_token, addRemove) {
-    document.querySelectorAll('.remove-from-library').forEach(function(button) {
+function handleItemRemoval(csrf_token) {
+    document.querySelectorAll('.remove-item').forEach(function(button) {
         button.addEventListener('click', function() {
-            var songId = this.dataset.songId;
-            var songTitle = this.dataset.songTitle;
+            var itemId = this.dataset.itemId;
+            var itemTitle = this.dataset.itemTitle;
+            var itemAction = this.dataset.itemAction;
+            var itemLocation = this.dataset.itemLocation;
 
             let body = document.body;
             let confirmDiv = document.createElement('div');
             let confirmText = document.createElement('p');
-            if (addRemove === 'add') {
-                confirmText.textContent = `Are you sure you want to add ${songTitle} to your library?`;
+            if (itemAction === 'add') {
+                confirmText.textContent = `Are you sure you want to add ${itemTitle} to ${itemLocation}?`;
             } 
             else {
-                confirmText.textContent = `Are you sure you want to remove ${songTitle} from your library?`;
+                confirmText.textContent = `Are you sure you want to remove ${itemTitle} from ${itemLocation}?`;
             }
             let buttonDiv = document.createElement('div');
             let confirmButtonYes = document.createElement('button');
@@ -25,15 +27,19 @@ function handleSongRemoval(csrf_token, addRemove) {
             buttonDiv.appendChild(confirmButtonYes);
             buttonDiv.appendChild(confirmButtonNo);
             
-            if (addRemove === 'add') {
+            if (itemAction === 'add') {
                 postUrl = '/add-to-library/';
             }
             else {
                 postUrl = '/remove-from-library/';
             }
 
+            if (itemLocation !== 'library') {
+                postUrl = ''
+            }
+
             confirmButtonYes.addEventListener('click', function() {
-                fetch(postUrl + songId + '/', {
+                fetch(postUrl + itemId + '/', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -44,8 +50,9 @@ function handleSongRemoval(csrf_token, addRemove) {
                     return response.json();
                 }).then(function(data) {
                     if (data.status === 'success') {
-                        var songElement = document.querySelector('[data-song-id="' + songId + '"]');
+                        var songElement = document.querySelector('[data-item-id="' + itemId + '"]');
                         songElement.remove();
+                        window.location.reload();
                     }
                 });
                 confirmDiv.remove();
@@ -113,6 +120,6 @@ async function fetchUrls(urls, imgUrl, lyricsUrl, mp3Url, karaokeUrl, tabUrl) {
         }
     });
 
-    var results = await Promise.allSettled(promises);
+    await Promise.allSettled(promises);
     console.log('All fetches are complete');
 }

@@ -6,4 +6,5 @@ urlpatterns = [
     path('', include('library.urls')),
     path('', include('login.urls')),
     path('', include('obtain.urls')),
+    path('', include('groups.urls')),   
 ]
