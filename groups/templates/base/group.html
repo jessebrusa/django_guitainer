@@ -25,9 +25,7 @@
             {% if is_current_user_admin %}
                 {% if not user.admin %}
                     <button class="make-admin" data-user-id="{{ user.user_id }}">Make Admin</button>
-                    <button class="remove-item" data-item-title="{{ user.username }}" data-item-location="{{ name }}" data-group-id="{{ group_id }}" data-user-id="{{ user.user_id }}">
-                        Remove User
-                    </button>
+                    <button id="leave-group-button" data-group-id="{{ group_id }}" data-user-id="{{ user_id }}">Leave Group</button>
                 {% endif %}
             {% endif %}
         {% empty %}
@@ -40,7 +38,7 @@
         <button id="edit-message-button">Edit Group Message</button>
         <button id="edit-group-name-button">Edit Group Name</button>
     {% endif %} 
-    <button>Leave Group</button>
+    <button id="leave-group-button" data-group-id="{{ group_id }}" data-user-id="{{ current_user_id }}">Leave Group</button>
     {% if is_current_user_admin %}
         <button>Delete Group</button>
     {% endif %}
@@ -244,6 +242,46 @@
                 }).then(function(data) {
                     location.reload();
                 });
+            });
+        });
+
+        document.getElementById('leave-group-button').addEventListener('click', function() {
+            var groupId = this.dataset.groupId;
+            var userId = this.dataset.userId;
+
+            let body = document.body;
+            let confirmDiv = document.createElement('div');
+            let confirmText = document.createElement('p');
+            confirmText.textContent = `Are you sure you want to leave this group?`;
+            let buttonDiv = document.createElement('div');
+            let confirmButtonYes = document.createElement('button');
+            confirmButtonYes.textContent = 'Yes';
+            let confirmButtonNo = document.createElement('button');
+            confirmButtonNo.textContent = 'No';
+
+            body.appendChild(confirmDiv);
+            confirmDiv.appendChild(confirmText);
+            confirmDiv.appendChild(buttonDiv);
+            buttonDiv.appendChild(confirmButtonYes);
+            buttonDiv.appendChild(confirmButtonNo);
+
+            confirmButtonYes.addEventListener('click', function() {
+                fetch('/remove-user/' + groupId + '/' + userId + '/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': csrftoken
+                    },
+                    body: JSON.stringify({})
+                }).then(function(response) {
+                    return response.json()
+                }).then(function(data) {
+                    window.location.href = '/library/';  // Add this line
+                });
+            });
+
+            confirmButtonNo.addEventListener('click', function() {
+                body.removeChild(confirmDiv);
             });
         });
     </script>
