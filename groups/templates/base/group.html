@@ -1,7 +1,7 @@
 {% extends 'base/main.html' %}
 
 {% block content %}
-    <h1>{{ name }}</h1>
+    <h1 data-group-name="{{ name }}">{{ name }}</h1>
     <p>{{ message }}</p>
     <h2>Songs:</h2>
     <ul>
@@ -61,6 +61,7 @@
         <label for="message-input">Message:</label>
         <textarea name="message"></textarea>
         <input type="submit" value="Submit"></input>
+        <button type="button" id="cancel-button-message">Cancel</button>
     </form>
 
     <form id="edit-group-name-form" style="display: none;" action="{% url 'edit-group-name' group_id %}" method="post">
@@ -69,6 +70,7 @@
         <label for="group-name-input">Group Name:</label>
         <input type="text" name="group_name"></input>
         <input type="submit" value="Submit"></input>
+        <button type="button" id="cancel-button-name">Cancel</button>
     </form>
 
     {% load static %}
@@ -77,6 +79,15 @@
     <script>
         var csrftoken = "{{ csrf_token }}";
         var groupId = "{{ group_id }}";
+        var groupName = document.querySelector('h1').dataset.groupName;
+
+        document.getElementById('cancel-button-name').addEventListener('click', function() {
+            document.getElementById('edit-group-name-form').style.display = 'none';
+        });
+
+        document.getElementById('cancel-button-message').addEventListener('click', function() {
+            document.getElementById('edit-message-form').style.display = 'none';
+        });
 
         $('#add-user-form').on('submit', function(event) {
             event.preventDefault();
@@ -160,23 +171,49 @@
         document.addEventListener('DOMContentLoaded', function() {
             var removeSongGroupButton = document.querySelector('.remove-song-group');
             if (removeSongGroupButton) {
-            removeSongGroupButton.addEventListener('click', function() {
-                var songId = removeSongGroupButton.dataset.songId
-                    fetch('/remove-song-group/' + groupId + '/' + songId + '/', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRFToken': csrftoken
-                        },
-                        body: JSON.stringify({})
-                    }).then(function(response) {
-                        return response.json()
-                    }).then(function(data) {
-                        location.reload()
-                    })
-                })
+                removeSongGroupButton.addEventListener('click', function() {
+                    var songId = removeSongGroupButton.dataset.songId;
+                    var songTitle = removeSongGroupButton.dataset.songTitle;
+                    var groupName = removeSongGroupButton.dataset.groupName;
+
+                    let body = document.body;
+                    let confirmDiv = document.createElement('div');
+                    let confirmText = document.createElement('p');
+                    confirmText.textContent = `Are you sure you want to remove ${songTitle} from ${groupName}?`;
+                    let buttonDiv = document.createElement('div');
+                    let confirmButtonYes = document.createElement('button');
+                    confirmButtonYes.textContent = 'Yes';
+                    let confirmButtonNo = document.createElement('button');
+                    confirmButtonNo.textContent = 'No';
+
+                    body.appendChild(confirmDiv);
+                    confirmDiv.appendChild(confirmText);
+                    confirmDiv.appendChild(buttonDiv);
+                    buttonDiv.appendChild(confirmButtonYes);
+                    buttonDiv.appendChild(confirmButtonNo);
+
+                    confirmButtonYes.addEventListener('click', function() {
+                        fetch('/remove-song-group/' + groupId + '/' + songId + '/', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRFToken': csrftoken
+                            },
+                            body: JSON.stringify({})
+                        }).then(function(response) {
+                            return response.json()
+                        }).then(function(data) {
+                            location.reload();
+                        });
+                    });
+
+                    confirmButtonNo.addEventListener('click', function() {
+                        body.removeChild(confirmDiv);
+                    });
+                });
             }
         });
+
 
         document.addEventListener('DOMContentLoaded', function() {
             var editGroupNameButton = document.querySelector('#edit-group-name-button');
