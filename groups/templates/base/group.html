@@ -10,6 +10,7 @@
                 {{ song.song.title }}
                 {{ song.song.artist }}
                 <img src="{{ song.img_url }}" alt="Album Artwork" height="100" width="100">
+                <a href="{% url 'song-detail' song.song.id %}">View Song</a>
                 <button data-song-id="{{ song.song.id }}" class="remove-song-group">Remove Song</button>
             </li>
         {% empty %}
