@@ -83,8 +83,37 @@ class EditMessageView(View):
             group = Group.objects.get(id=group_id)
             group.message = message
             group.save()
-            return JsonResponse({'status': 'success', 'message': 'Message Changed'}, status=200)
+            return JsonResponse({'status': 'success'}, status=200)
 
         except GroupUser.DoesNotExist:
-            return JsonResponse({'status': 'error', 'message': 'Group not found'}, status=400)
-        
+            return JsonResponse({'status': 'error'}, status=400)
+
+
+class RemoveSongGroupView(View):
+    def post(self, request, *args, **kwargs):
+        group_id = self.kwargs['group_id']
+        song_id = self.kwargs['song_id']
+
+        try:
+            group_song = GroupSong.objects.get(song_id=song_id, group_id=group_id)
+            group_song.delete()
+            return JsonResponse({'status': 'success', 'message': 'User made into admin.'}, status=200)
+
+        except GroupUser.DoesNotExist:
+            return JsonResponse({'status': 'error', 'message': 'User not found in this group.'}, status=400)
+
+
+class EditGroupNameView(View):
+    def post(self, request, *args, **kwargs):
+        group_id = self.kwargs['group_id']
+        data = json.loads(request.body)
+        group_name = data.get('group_name')
+
+        try:
+            group = Group.objects.get(id=group_id)
+            group.name = group_name
+            group.save()
+            return JsonResponse({'status': 'success'}, status=200)
+
+        except GroupUser.DoesNotExist:
+            return JsonResponse({'status': 'error'}, status=400)
