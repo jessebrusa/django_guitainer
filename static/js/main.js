@@ -35,7 +35,11 @@ function handleItemRemoval(csrf_token) {
             }
 
             if (itemLocation !== 'library') {
-                postUrl = ''
+                var groupId = this.dataset.groupId;
+                var userId = this.dataset.userId;
+
+                var itemId = groupId + '/' + userId;
+                postUrl = '/remove-user/';
             }
 
             confirmButtonYes.addEventListener('click', function() {
@@ -51,8 +55,10 @@ function handleItemRemoval(csrf_token) {
                 }).then(function(data) {
                     if (data.status === 'success') {
                         var songElement = document.querySelector('[data-item-id="' + itemId + '"]');
-                        songElement.remove();
-                        window.location.reload();
+                        if (itemLocation === 'library') {
+                            songElement.remove();
+                        } 
+                        location.reload();
                     }
                 });
                 confirmDiv.remove();

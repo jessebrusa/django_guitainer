@@ -6,7 +6,12 @@
     <h2>Songs:</h2>
     <ul>
         {% for song in songs %}
-            <li>{{ song.title }}</li>
+            <li>
+                {{ song.song.title }}
+                {{ song.song.artist }}
+                <img src="{{ song.img_url }}" alt="Album Artwork" height="100" width="100">
+                <button>Remove Song</button>
+            </li>
         {% empty %}
             <li>No songs in this group.</li>
         {% endfor %}
@@ -18,8 +23,10 @@
             <li>{{ user.username }}</li>
             {% if is_current_user_admin %}
                 {% if not user.admin %}
-                    <button>Make Admin</button>
-                    <button class="remove-item" data-item-title="{{ user.username }}" data-item-location="{{ name }}">Remove User</button>
+                    <button class="make-admin" data-user-id="{{ user.user_id }}">Make Admin</button>
+                    <button class="remove-item" data-item-title="{{ user.username }}" data-item-location="{{ name }}" data-group-id="{{ group_id }}" data-user-id="{{ user.user_id }}">
+                        Remove User
+                    </button>
                 {% endif %}
             {% endif %}
         {% empty %}
@@ -29,7 +36,7 @@
 
     {% if is_current_user_admin %}
         <button id="add-user-button">Add User</button>
-        <button>Edit Group Message</button>
+        <button id="edit-message-button">Edit Group Message</button>
         <button>Edit Group Name</button>
     {% endif %} 
     <button>Leave Group</button>
@@ -40,8 +47,18 @@
     <form id="add-user-form" style="display: none;" action="{% url 'add-user' group_id %}" method="post">
         {% csrf_token %}
         {{ form }}
-        <label>Add User:</label>
+        <label for="username-input">Username:</label>
         <input type="text" name="username"></input>
+        <label for="make-admin-input">Make Admin?</label>
+        <input type="checkbox" id="make-admin-input" name="make_admin_form"></input>
+        <input type="submit" value="Submit"></input>
+    </form>
+        
+    <form id="edit-message-form" style="display: none;" action="{% url 'edit-message' group_id %}" method="post">
+        {% csrf_token %}
+        {{ form }}
+        <label for="message-input">Message:</label>
+        <textarea name="message"></textarea>
         <input type="submit" value="Submit"></input>
     </form>
 
@@ -50,6 +67,7 @@
     <script src="{% static 'js/main.js' %}"></script>
     <script>
         var csrftoken = "{{ csrf_token }}";
+        var groupId = "{{ group_id }}";
 
         $('#add-user-form').on('submit', function(event) {
             event.preventDefault();
@@ -75,5 +93,60 @@
         window.onload = function () {
             handleItemRemoval(csrftoken, 'your library');
         };
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var makeAdminButton = document.querySelector('.make-admin');
+            if (makeAdminButton) {
+            makeAdminButton.addEventListener('click', function() {
+                var userId = makeAdminButton.dataset.userId
+                    fetch('/make-admin/' + groupId + '/' + userId + '/', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRFToken': csrftoken
+                        },
+                        body: JSON.stringify({})
+                    }).then(function(response) {
+                        return response.json()
+                    }).then(function(data) {
+                        alert(data.message)
+                        location.reload()
+                    })
+                })
+            }
+        });
+
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            var editMessageButton = document.querySelector('#edit-message-button');
+            var editMessageForm = document.querySelector('#edit-message-form');
+
+            // Show the form when the button is clicked
+            editMessageButton.addEventListener('click', function(event) {
+                editMessageForm.style.display = 'block';
+            });
+
+            // Submit the form data when the form is submitted
+            editMessageForm.addEventListener('submit', function(event) {
+                event.preventDefault();  // Prevent the form from being submitted normally
+
+                var message = editMessageForm.querySelector('textarea[name="message"]').value;
+
+                fetch('/edit-message/' + groupId + '/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': csrftoken
+                    },
+                    body: JSON.stringify({
+                        message: message
+                    })
+                }).then(function(response) {
+                    return response.json();
+                }).then(function(data) {
+                    location.reload();
+                });
+            });
+        });
     </script>
 {% endblock %}
