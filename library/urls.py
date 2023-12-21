@@ -15,4 +15,6 @@ urlpatterns = [
 
     path('add-remove-favorite/', AddRemoveFavoritesView.as_view(), name='add-remove-favorite'),
 
+    path('create-guitainer/', CreateGuitainerView.as_view(), name='create-guitainer'),
+
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

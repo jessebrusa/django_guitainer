@@ -1,12 +1,19 @@
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, render, redirect
 from django.http import JsonResponse
+from .forms import SongForm
 import json
 
 from django.views.generic import ListView, DetailView
 from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.conf import settings
 
-from .models import Song, UserSong
+
+from .models import Song, UserSong, SongUrl, SongAttempt   
+
+import os
+from google.cloud import storage
+import tempfile
 
 
 class LibraryView(LoginRequiredMixin, ListView):
@@ -73,3 +80,79 @@ class AddRemoveFavoritesView(LoginRequiredMixin, View):
         user_song.save()
 
         return JsonResponse({'is_favorite': user_song.favorite})
+    
+
+class CreateGuitainerView(LoginRequiredMixin, View):
+    def get(self, request):
+        form = SongForm()
+        return render(request, 'base/create-guitainer.html', {'form': form})
+
+    def post(self, request):
+        form = SongForm(request.POST, request.FILES)
+        if form.is_valid():
+            new_song = Song()
+            new_song.title = form.cleaned_data.get('title')
+            url_title = new_song.title.replace(' ', '-')
+            if form.cleaned_data.get('artist'):
+                new_song.artist = form.cleaned_data.get('artist')
+            if form.cleaned_data.get('lyric'):  
+                new_song.lyric = form.cleaned_data.get('lyric')
+
+            new_song.created = request.user
+            new_song.save()
+
+            song_url = SongUrl(id=new_song)
+            song_attempt = SongAttempt(id=new_song)
+
+            if 'img_address' in request.POST:
+                img_address = request.POST['img_address']
+                song_url = SongUrl(id=new_song, img=img_address)
+
+
+            if 'karaoke' in request.FILES:
+                karaoke_file = request.FILES['karaoke']
+                with tempfile.NamedTemporaryFile(suffix=".mp4", delete=False) as temp_file:
+                    for chunk in karaoke_file.chunks():
+                        temp_file.write(chunk)
+
+                client = storage.Client()
+                bucket = client.get_bucket('guitainer')
+                blob = bucket.blob(f'karaoke/{url_title}.mp4')
+                blob.upload_from_filename(temp_file.name)
+                os.remove(temp_file.name)
+
+                song_url = SongUrl(id=new_song, karaoke=blob.public_url)
+                song_attempt = SongAttempt(id=new_song, karaoke=True)
+
+
+            if 'mp3' in request.FILES:
+                mp3_file = request.FILES['mp3']
+                with tempfile.NamedTemporaryFile(suffix=".mp3", delete=False) as temp_file:
+                    for chunk in mp3_file.chunks():
+                        temp_file.write(chunk)
+
+                client = storage.Client()
+                bucket = client.get_bucket('guitainer')
+                blob = bucket.blob(f'mp3/{url_title}.mp3')
+                blob.upload_from_filename(temp_file.name)
+                os.remove(temp_file.name)
+
+                song_url = SongUrl(id=new_song, mp3=blob.public_url)
+                song_attempt = SongAttempt(id=new_song, mp3=True)
+
+
+            if 'tabs' in request.FILES:
+                tabs_file = request.FILES['tabs']
+                tabs_path = os.path.join(settings.MEDIA_ROOT, 'tab', f"{url_title}.pdf")
+                with open(tabs_path, 'wb+') as destination:
+                    for chunk in tabs_file.chunks():
+                        destination.write(chunk)
+
+                song_url = SongUrl(id=new_song, tab=tabs_path)
+                song_attempt = SongAttempt(id=new_song, tab=True)
+
+            song_url.save()
+            song_attempt.save()
+
+            return redirect('/song/' + str(new_song.id))
+        return render(request, 'base/create-guitainer.html', {'form': form})
