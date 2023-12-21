@@ -18,6 +18,7 @@ function handleItemRemoval(csrf_token) {
             let buttonDiv = document.createElement('div');
             let confirmButtonYes = document.createElement('button');
             confirmButtonYes.textContent = 'Yes';
+            confirmButtonYes.id = 'confirmButtonYes';
             let confirmButtonNo = document.createElement('button');
             confirmButtonNo.textContent = 'No';
 
@@ -68,6 +69,48 @@ function handleItemRemoval(csrf_token) {
                 confirmDiv.remove();
             }); 
         })
+    });
+}
+
+function createConfirmationDialog(text, url, csrftoken, redirect) {
+    let body = document.body;
+    let confirmDiv = document.createElement('div');
+    let confirmText = document.createElement('p');
+    confirmText.textContent = text;
+    let buttonDiv = document.createElement('div');
+    let confirmButtonYes = document.createElement('button');
+    confirmButtonYes.textContent = 'Yes';
+    let confirmButtonNo = document.createElement('button');
+    confirmButtonNo.textContent = 'No';
+
+    body.appendChild(confirmDiv);
+    confirmDiv.appendChild(confirmText);
+    confirmDiv.appendChild(buttonDiv);
+    buttonDiv.appendChild(confirmButtonYes);
+    buttonDiv.appendChild(confirmButtonNo);
+
+    confirmButtonYes.addEventListener('click', function() {
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrftoken
+            },
+            body: JSON.stringify({})
+        }).then(function(response) {
+            return response.json()
+        }).then(function(data) {
+            if (redirect === 'stay') {
+                location.reload(); 
+            } else {
+                window.location.href = '/library/'; 
+            }
+        });
+    });
+
+
+    confirmButtonNo.addEventListener('click', function() {
+        body.removeChild(confirmDiv);
     });
 }
 

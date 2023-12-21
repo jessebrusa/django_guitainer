@@ -11,7 +11,7 @@
                 {{ song.song.artist }}
                 <img src="{{ song.img_url }}" alt="Album Artwork" height="100" width="100">
                 <a href="{% url 'song-detail' song.song.id %}">View Song</a>
-                <button data-song-id="{{ song.song.id }}" class="remove-song-group">Remove Song</button>
+                <button data-song-id="{{ song.song.id }}" class="remove-song-group" data-song-title="{{ song.song.title }}">Remove Song</button>
             </li>
         {% empty %}
             <li>No songs in this group.</li>
@@ -40,24 +40,25 @@
     {% endif %} 
     <button id="leave-group-button" data-group-id="{{ group_id }}" data-user-id="{{ current_user_id }}">Leave Group</button>
     {% if is_current_user_admin %}
-        <button>Delete Group</button>
+        <button id="delete-group">Delete Group</button>
     {% endif %}
 
     <form id="add-user-form" style="display: none;" action="{% url 'add-user' group_id %}" method="post">
         {% csrf_token %}
         {{ form }}
         <label for="username-input">Username:</label>
-        <input type="text" name="username"></input>
+        <input id="username-input" type="text" name="username" autocomplete="username"></input>
         <label for="make-admin-input">Make Admin?</label>
-        <input type="checkbox" id="make-admin-input" name="make_admin_form"></input>
+        <input type="checkbox" id="make-admin-input" name="make_admin_form" autocomplete="off"></input>
         <input type="submit" value="Submit"></input>
+        <button type="button" id="cancel-button-add-user">Cancel</button>
     </form>
-        
+
     <form id="edit-message-form" style="display: none;" action="{% url 'edit-message' group_id %}" method="post">
         {% csrf_token %}
         {{ form }}
         <label for="message-input">Message:</label>
-        <textarea name="message"></textarea>
+        <textarea id="message-input" name="message"></textarea>
         <input type="submit" value="Submit"></input>
         <button type="button" id="cancel-button-message">Cancel</button>
     </form>
@@ -66,7 +67,7 @@
         {% csrf_token %}
         {{ form }}
         <label for="group-name-input">Group Name:</label>
-        <input type="text" name="group_name"></input>
+        <input id="group-name-input" type="text" name="group_name"></input>
         <input type="submit" value="Submit"></input>
         <button type="button" id="cancel-button-name">Cancel</button>
     </form>
@@ -85,6 +86,10 @@
 
         document.getElementById('cancel-button-message').addEventListener('click', function() {
             document.getElementById('edit-message-form').style.display = 'none';
+        });
+
+        document.getElementById('cancel-button-add-user').addEventListener('click', function() {
+            document.getElementById('add-user-form').style.display = 'none';
         });
 
         $('#add-user-form').on('submit', function(event) {
@@ -138,14 +143,12 @@
             var editMessageButton = document.querySelector('#edit-message-button');
             var editMessageForm = document.querySelector('#edit-message-form');
 
-            // Show the form when the button is clicked
             editMessageButton.addEventListener('click', function(event) {
                 editMessageForm.style.display = 'block';
             });
 
-            // Submit the form data when the form is submitted
             editMessageForm.addEventListener('submit', function(event) {
-                event.preventDefault();  // Prevent the form from being submitted normally
+                event.preventDefault();  
 
                 var message = editMessageForm.querySelector('textarea[name="message"]').value;
 
@@ -172,42 +175,9 @@
                 removeSongGroupButton.addEventListener('click', function() {
                     var songId = removeSongGroupButton.dataset.songId;
                     var songTitle = removeSongGroupButton.dataset.songTitle;
-                    var groupName = removeSongGroupButton.dataset.groupName;
 
-                    let body = document.body;
-                    let confirmDiv = document.createElement('div');
-                    let confirmText = document.createElement('p');
-                    confirmText.textContent = `Are you sure you want to remove ${songTitle} from ${groupName}?`;
-                    let buttonDiv = document.createElement('div');
-                    let confirmButtonYes = document.createElement('button');
-                    confirmButtonYes.textContent = 'Yes';
-                    let confirmButtonNo = document.createElement('button');
-                    confirmButtonNo.textContent = 'No';
-
-                    body.appendChild(confirmDiv);
-                    confirmDiv.appendChild(confirmText);
-                    confirmDiv.appendChild(buttonDiv);
-                    buttonDiv.appendChild(confirmButtonYes);
-                    buttonDiv.appendChild(confirmButtonNo);
-
-                    confirmButtonYes.addEventListener('click', function() {
-                        fetch('/remove-song-group/' + groupId + '/' + songId + '/', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'X-CSRFToken': csrftoken
-                            },
-                            body: JSON.stringify({})
-                        }).then(function(response) {
-                            return response.json()
-                        }).then(function(data) {
-                            location.reload();
-                        });
-                    });
-
-                    confirmButtonNo.addEventListener('click', function() {
-                        body.removeChild(confirmDiv);
-                    });
+                    createConfirmationDialog(`Are you sure you want to remove ${songTitle} from ${groupName}?`,
+                    '/remove-song-group/' + groupId + '/' + songId + '/', csrftoken, 'stay');
                 });
             }
         });
@@ -217,14 +187,12 @@
             var editGroupNameButton = document.querySelector('#edit-group-name-button');
             var editGroupNameForm = document.querySelector('#edit-group-name-form');
 
-            // Show the form when the button is clicked
             editGroupNameButton.addEventListener('click', function(event) {
                 editGroupNameForm.style.display = 'block';
             });
-
-            // Submit the form data when the form is submitted
+   
             editGroupNameForm.addEventListener('submit', function(event) {
-                event.preventDefault();  // Prevent the form from being submitted normally
+                event.preventDefault();  
 
                 var groupName = editGroupNameForm.querySelector('input[name="group_name"]').value;
 
@@ -249,40 +217,19 @@
             var groupId = this.dataset.groupId;
             var userId = this.dataset.userId;
 
-            let body = document.body;
-            let confirmDiv = document.createElement('div');
-            let confirmText = document.createElement('p');
-            confirmText.textContent = `Are you sure you want to leave this group?`;
-            let buttonDiv = document.createElement('div');
-            let confirmButtonYes = document.createElement('button');
-            confirmButtonYes.textContent = 'Yes';
-            let confirmButtonNo = document.createElement('button');
-            confirmButtonNo.textContent = 'No';
+            createConfirmationDialog(`Are you sure you want to leave ${groupName}?`,
+            '/remove-user/' + groupId + '/' + userId + '/', csrftoken, 'library');
+        });
 
-            body.appendChild(confirmDiv);
-            confirmDiv.appendChild(confirmText);
-            confirmDiv.appendChild(buttonDiv);
-            buttonDiv.appendChild(confirmButtonYes);
-            buttonDiv.appendChild(confirmButtonNo);
+        document.addEventListener('DOMContentLoaded', function() {
+            var deleteGroupButton = document.querySelector('#delete-group');
+            if (deleteGroupButton) {
+                deleteGroupButton.addEventListener('click', function() {
 
-            confirmButtonYes.addEventListener('click', function() {
-                fetch('/remove-user/' + groupId + '/' + userId + '/', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRFToken': csrftoken
-                    },
-                    body: JSON.stringify({})
-                }).then(function(response) {
-                    return response.json()
-                }).then(function(data) {
-                    window.location.href = '/library/';  // Add this line
+                    createConfirmationDialog(`Are you sure you want to permanently delete ${groupName}?`,
+                    '/delete-group/' + groupId + '/', csrftoken, 'library');
                 });
-            });
-
-            confirmButtonNo.addEventListener('click', function() {
-                body.removeChild(confirmDiv);
-            });
+            }
         });
     </script>
 {% endblock %}

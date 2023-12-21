@@ -122,3 +122,16 @@ class EditGroupNameView(View):
         except GroupUser.DoesNotExist:
             return JsonResponse({'status': 'error'}, status=400)
         
+
+class DeleteGroupView(View):
+    def post(self, request, *args, **kwargs):
+        group_id = self.kwargs['group_id']
+
+        try:
+            group = Group.objects.get(id=group_id)
+            group.delete()
+            return JsonResponse({'status': 'success'}, status=200)
+
+        except GroupUser.DoesNotExist:
+            return JsonResponse({'status': 'error'}, status=400)
+        
