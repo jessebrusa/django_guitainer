@@ -13,4 +13,6 @@ urlpatterns = [
     path('remove-user/<int:group_id>/<int:user_id>/', RemoveUserView.as_view(), name='remove-user'),
     path('remove-song-group/<int:group_id>/<int:song_id>/', RemoveSongGroupView.as_view(), name='remove-song-group'),
     path('delete-group/<int:group_id>/', DeleteGroupView.as_view(), name='delete-group'),
+
+    path('create-group/', CreateGroupView.as_view(), name='create-group'),
 ]

@@ -1,0 +1,39 @@
+{% extends 'base/main.html' %}
+
+{% block content %}
+    <h1>Welcome, {{ user.username }}</h1>
+
+    <div>
+        <h2>Favorite Songs</h2>
+        {% for song in favorite_songs %}
+            <p>{{ song.title }}</p>
+            <p>{{ song.artist }}</p>
+            <img src="{{ song.songurl.img }}" alt="Song Image" width="200" height="200">
+            <a href="{% url 'song-detail' song.id %}">View Song</a>
+        {% empty %}
+            <p>No favorite songs.</p>
+        {% endfor %}
+    </div>
+
+    <div>
+        <h2>Created Songs</h2>
+        {% for song in created_songs %}
+            <p>{{ song.title }}</p>
+            <p>{{ song.artist }}</p>
+            <img src="{{ song.songurl.img }}" alt="Song Image" width="200" height="200">
+        {% empty %}
+            <p>No created songs.</p>
+        {% endfor %}
+    </div>
+
+    <div>
+        <h2>Groups</h2>
+        {% for group in user_groups %}
+            <p>{{ group.name }}</p>
+            <a href="{% url 'group-page' group.id %}">View Group</a>
+        {% empty %}
+            <p>No groups.</p>
+        {% endfor %}
+        <a href="{% url 'create-group' %}">Create Group</a>
+    </div>
+{% endblock %}

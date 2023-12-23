@@ -4,10 +4,13 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.http import JsonResponse
 from .models import Group, GroupSong, GroupUser
+from .forms import GroupForm
 import json
+from django.views.generic.edit import CreateView
+from django.urls import reverse
 
 
-class GroupPageView(View):
+class GroupPageView(LoginRequiredMixin, View):
     template_name = 'base/group.html'
 
     def get(self, request, group_id):
@@ -135,3 +138,17 @@ class DeleteGroupView(View):
         except GroupUser.DoesNotExist:
             return JsonResponse({'status': 'error'}, status=400)
         
+
+class CreateGroupView(CreateView):
+    model = Group
+    form_class = GroupForm
+    template_name = 'base/group-form.html'
+
+    def form_valid(self, form):
+        form.instance.created_by = self.request.user
+        response = super().form_valid(form)
+        GroupUser.objects.create(user=self.request.user, group=self.object, admin=True)
+        return response
+    
+    def get_success_url(self):
+        return reverse('group-page', args=[self.object.id])

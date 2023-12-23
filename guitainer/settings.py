@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     'components',
     'obtain',
     'groups',
+    'dashboard',
 ]
 
 MIDDLEWARE = [
