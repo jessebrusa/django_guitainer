@@ -31,7 +31,7 @@ class CatalogueView(LoginRequiredMixin, ListView):
     context_object_name = 'song_list'
 
     def get_queryset(self):
-        return Song.objects.select_related('songurl').exclude(usersong__user=self.request.user)
+        return Song.objects.select_related('songurl').filter(usersong__user=self.request.user, created__isnull=True)
 
 
 class AddToLibraryView(LoginRequiredMixin, View):
