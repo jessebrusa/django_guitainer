@@ -93,10 +93,10 @@ class CreateGuitainerView(LoginRequiredMixin, View):
             new_song = Song()
             new_song.title = form.cleaned_data.get('title')
             url_title = new_song.title.replace(' ', '-')
+
             if form.cleaned_data.get('artist'):
                 new_song.artist = form.cleaned_data.get('artist')
-            if form.cleaned_data.get('lyric'):  
-                new_song.lyric = form.cleaned_data.get('lyric')
+
 
             new_song.created = request.user
             new_song.save()
@@ -104,9 +104,20 @@ class CreateGuitainerView(LoginRequiredMixin, View):
             song_url = SongUrl(id=new_song)
             song_attempt = SongAttempt(id=new_song)
 
+
+            if form.cleaned_data.get('lyric'):  
+                new_song.lyric = form.cleaned_data.get('lyric')
+                new_song.save()
+
+                song_attempt.lyric = True
+                song_attempt.save()
+
+
             if 'img_address' in request.POST:
                 img_address = request.POST['img_address']
-                song_url = SongUrl(id=new_song, img=img_address)
+                
+                song_url.img = img_address
+                song_url.save()
 
 
             if 'karaoke' in request.FILES:
@@ -121,8 +132,11 @@ class CreateGuitainerView(LoginRequiredMixin, View):
                 blob.upload_from_filename(temp_file.name)
                 os.remove(temp_file.name)
 
-                song_url = SongUrl(id=new_song, karaoke=blob.public_url)
-                song_attempt = SongAttempt(id=new_song, karaoke=True)
+                song_url.karaoke = blob.public_url
+                song_url.save()
+
+                song_attempt.karaoke = True
+                song_attempt.save()
 
 
             if 'mp3' in request.FILES:
@@ -137,8 +151,11 @@ class CreateGuitainerView(LoginRequiredMixin, View):
                 blob.upload_from_filename(temp_file.name)
                 os.remove(temp_file.name)
 
-                song_url = SongUrl(id=new_song, mp3=blob.public_url)
-                song_attempt = SongAttempt(id=new_song, mp3=True)
+                song_url.mp3 = blob.public_url
+                song_url.save()
+
+                song_attempt.mp3 = True
+                song_attempt.save()
 
 
             if 'tabs' in request.FILES:
@@ -148,11 +165,13 @@ class CreateGuitainerView(LoginRequiredMixin, View):
                     for chunk in tabs_file.chunks():
                         destination.write(chunk)
 
-                song_url = SongUrl(id=new_song, tab=tabs_path)
-                song_attempt = SongAttempt(id=new_song, tab=True)
+                db_tabs_path = f'/media/tab/{url_title}.pdf'
+                song_url.tab = db_tabs_path
+                song_url.save()
 
-            song_url.save()
-            song_attempt.save()
+                song_attempt.tab = True
+                song_attempt.save()
+
 
             return redirect('/song/' + str(new_song.id))
         return render(request, 'base/create-guitainer.html', {'form': form})
