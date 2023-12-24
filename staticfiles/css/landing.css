@@ -1,0 +1,247 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    overflow: hidden;
+    background-color: black;
+}
+
+.case-container {
+    position: relative;
+    width: 30vh; 
+    height: 30vh; 
+    margin: 0;
+}
+
+#closed-case, #open-case {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center; 
+    transition: opacity 0.3s ease-in-out;
+    padding: 0;
+    margin: 0;
+}
+
+#closed-case {
+    transform: rotate(32deg) translate(2px, 40px) scale(.8);
+}
+
+.case-container:hover #closed-case {
+    opacity: 0;
+}
+
+#open-case {
+    opacity: 0;
+    transform: rotate(30deg) scale(.92);
+    transition: opacity 0.5s ease-in-out; 
+}
+
+.case-container:hover #open-case {
+    opacity: 1;
+}
+
+
+
+.container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 400px; 
+    height: 400px; 
+    transform: translate(-50%, -50%);
+}
+
+.container:hover {
+    animation: orbit 5s infinite linear;
+    animation-delay: 1s;
+}
+
+@keyframes orbit {
+    0% {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+    100% {
+        transform: translate(-50%, -50%) rotate(1turn);
+    }
+}
+
+.color-div {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+}
+
+.red {
+    top: 50%;
+    left: 50%;
+    width: 120px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.red img {
+    width: 100%;
+    height: auto;
+}
+
+.blue {
+    top: 50%;
+    left: 50%;
+    width: 70px;
+    height: 120px;
+    background-color: blue;
+}
+
+.blue img {
+    width: 100%;
+    height: 100%;
+}
+
+.green {
+    top: 50%;
+    left: 50%;
+    width: 120px;
+    height: 70px;
+    background-color: green;
+}
+
+.green img {
+    width: 100%;
+    height: 100%;
+}
+
+.yellow {
+    top: 50%;
+    left: 50%;
+    width: 70px;
+    height: 120px;
+    background-color: yellow;
+}
+
+.yellow img {
+    width: 100%;
+    height: 100%;
+}
+
+
+@keyframes counter-rotation-red {
+    0% {
+        transform: translate(-50%, -50%) rotate(0deg) translate(200px) rotate(0deg);
+    }
+    100% {
+        transform: translate(-50%, -50%) rotate(0deg) translate(200px) rotate(-1turn);
+    }
+}
+
+.container:hover .red {
+    animation: move-to-circle-red 1s forwards ease-out, 
+    counter-rotation-red 5s infinite linear forwards 1s;
+    opacity: 1;
+}
+
+@keyframes counter-rotation-blue {
+    0% {
+        transform: translate(-50%, -50%) rotate(90deg) translate(200px) rotate(270deg);
+    }
+    100% {
+        transform: translate(-50%, -50%) rotate(90deg) translate(200px) rotate(-90deg);
+    }
+}
+
+.container:hover .blue {
+    animation: move-to-circle-blue 1s forwards ease-out, 
+    counter-rotation-blue 5s infinite linear forwards 1s;
+    opacity: 1;
+}
+
+@keyframes counter-rotation-green {
+    0% {
+        transform: translate(-50%, -50%) rotate(180deg) translate(200px) rotate(180deg);
+    }
+    100% {
+        transform: translate(-50%, -50%) rotate(180deg) translate(200px) rotate(-180deg);
+    }
+}
+
+.container:hover .green {
+    animation: move-to-circle-green 1s forwards ease-out, 
+    counter-rotation-green 5s infinite linear forwards 1s;
+    opacity: 1;
+}
+
+@keyframes counter-rotation-yellow {
+    0% {
+        transform: translate(-50%, -50%) rotate(270deg) translate(200px) rotate(90deg);
+    }
+    100% {
+        transform: translate(-50%, -50%) rotate(270deg) translate(200px) rotate(-270deg);
+    }
+}
+
+.container:hover .yellow {
+    animation: move-to-circle-yellow 1s forwards ease-out, 
+    counter-rotation-yellow 5s infinite linear forwards 1s;
+    opacity: 1;
+}
+
+
+@keyframes move-to-center {
+    0% {
+        transform: translate(-50%, -50%);
+    }
+    100% {
+        transform: translate(-50%, -50%);
+    }
+}
+
+@keyframes move-to-circle-red {
+    0% {
+        transform: translate(-50%, -50%) scale(0.1);
+    }
+    100% {
+        transform: translate(140px, -25px); 
+    }
+}
+
+@keyframes move-to-circle-blue {
+    0% {
+        transform: translate(-50%, -50%) scale(0.1);
+    }
+    100% {
+        transform: translate(-35px, 140px);
+    }
+}
+
+@keyframes move-to-circle-green {
+    0% {
+        transform: translate(-50%, -50%) scale(0.1);
+    }
+    100% {
+        transform: translate(-260px, -35px);
+    }
+}
+
+@keyframes move-to-circle-yellow {
+    0% {
+        transform: translate(-50%, -50%) scale(0.1);
+    }
+    100% {
+        transform: translate(-35px, -260px);
+    }
+}
+
+.red, .blue, .green, .yellow {
+    transition: transform 0.5s ease-out;
+}

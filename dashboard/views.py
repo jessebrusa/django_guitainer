@@ -1,4 +1,6 @@
 from django.views import View
+from django.views.generic import TemplateView
+
 from django.shortcuts import render
 from library.models import Song, SongUrl
 from groups.models import Group, GroupUser
@@ -19,3 +21,7 @@ class DashboardView(View):
         }
 
         return render(request, 'base/dashboard.html', context)
+
+
+class LandingPageView(TemplateView):
+    template_name = "base/landing.html"

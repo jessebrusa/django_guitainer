@@ -1,0 +1,48 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}" />  
+    <link rel="stylesheet" href="{% static 'css/landing.css' %}">
+    <title>Guitainer</title>
+</head>
+
+<body>
+
+    Welcome to Guitainer
+
+    <div class="leftSideBar">
+
+    </div>
+
+    <div class="rightSightBar">
+        <div class="case-container">
+            <img id="closed-case" src="{% static 'images/case-closed.png' %}" alt="Closed Guitar Case">
+            <img id="open-case" src="{% static 'images/case-open.png' %}" alt="Open Guitar Case">
+        </div>
+        <div class="container">
+            
+            <div class="color-div red">
+                <img src="{% static 'images/mp3.png' %}" alt="picture of mp3 player">
+            </div>
+            <div class="color-div blue">
+                <img src="{% static 'images/lyrics.png' %}" alt="picture of lyrics">
+            </div>
+            <div class="color-div green">
+                <img src="{% static 'images/karaoke.png' %}" alt="picture of karaoke video">
+            </div>
+            <div class="color-div yellow">
+                <img src="{% static 'images/tab.png' %}" alt="picture of guitar tabs">
+            </div>
+        </div>
+    </div>
+
+    {% include 'base/footer.html' %}
+
+    <script src="{% static 'js/landing.js' %}"></script>
+</body>
+</html>
