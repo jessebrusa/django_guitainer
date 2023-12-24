@@ -51,7 +51,7 @@ CSP_IMG_SRC = ("*",)
 CSP_MEDIA_SRC = ("'self'", "https://storage.googleapis.com")
 CSP_STYLE_SRC = ("'self'", "'unsafe-inline'")
 CSP_DEFAULT_SRC = ("'self'",)
-CSP_SCRIPT_SRC = ("'self'", "'unsafe-inline'", "https://ajax.googleapis.com")
+CSP_SCRIPT_SRC = ("'self'", "'unsafe-inline'", "https://ajax.googleapis.com", "https://stackpath.bootstrapcdn.com")
 
 DEFAULT_FILE_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
 GS_BUCKET_NAME = 'guitainer'
