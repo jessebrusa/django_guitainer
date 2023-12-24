@@ -15,4 +15,6 @@ urlpatterns = [
     path('delete-group/<int:group_id>/', DeleteGroupView.as_view(), name='delete-group'),
 
     path('create-group/', CreateGroupView.as_view(), name='create-group'),
+    path('group-list/<int:song_id>', GroupListView.as_view(), name='group-list'),
+    path('add-song-to-group/<int:group_id>/<int:song_id>/', AddSongGroupView.as_view(), name='add-song-to-group')
 ]

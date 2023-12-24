@@ -1,9 +1,11 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views import View
+from django.views.generic.list import ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.http import JsonResponse
 from .models import Group, GroupSong, GroupUser
+from library.models import Song
 from .forms import GroupForm
 import json
 from django.views.generic.edit import CreateView
@@ -152,3 +154,29 @@ class CreateGroupView(CreateView):
     
     def get_success_url(self):
         return reverse('group-page', args=[self.object.id])
+    
+
+class GroupListView(LoginRequiredMixin, ListView):
+    model = GroupUser
+    template_name = 'base/group-list.html'
+
+    def get_queryset(self):
+        song_id = self.kwargs.get('song_id')
+        return GroupUser.objects.filter(user=self.request.user).exclude(group__groupsong__song=song_id)
+
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['song_id'] = self.kwargs.get('song_id')
+        return context
+    
+
+class AddSongGroupView(LoginRequiredMixin, View):
+    def post(self, request, *args, **kwargs):
+        group_id = self.kwargs.get('group_id')
+        song_id = self.kwargs.get('song_id')
+        group = Group.objects.get(id=group_id)
+        song = Song.objects.get(id=song_id)
+        GroupSong.objects.create(group=group, song=song)
+        GroupUser.objects.get_or_create(user=request.user, group=group)
+        return JsonResponse({'status': 'success'})

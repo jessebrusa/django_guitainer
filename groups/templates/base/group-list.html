@@ -1,0 +1,41 @@
+{% extends 'base/main.html' %}
+
+{% block content %}
+<ul>
+    {% for groupuser in object_list %}
+    <li>
+        <button class="add-song" data-group-id="{{ groupuser.group.id }}" data-song-id="{{ song_id }}">
+            {{ groupuser.group.name }}
+        </button>
+    </li>
+    {% empty %}
+    <li>No groups found</li>
+    {% endfor %}
+    <li><a href="{% url 'create-group' %}">Create a group</a></li>
+</ul>
+
+<script>
+    const csrftoken = "{{ csrf_token }}"
+
+    document.querySelectorAll('.add-song').forEach(button => {
+        button.addEventListener('click', () => {
+            const groupId = button.dataset.groupId;
+            const songId = button.dataset.songId;
+
+            fetch(`/add-song-to-group/${groupId}/${songId}/`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': csrftoken
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                if (data.status === 'success') {
+                    window.location.href = `/group-page/${groupId}/`;
+                }
+            });
+        });
+    });
+</script>
+{% endblock %}

@@ -50,7 +50,7 @@ class RemoveFromLibraryView(LoginRequiredMixin, View):
 
 class SongDetailView(LoginRequiredMixin, DetailView):
     model = Song
-    template_name = 'base/song_detail.html'
+    template_name = 'base/song-detail.html'
     context_object_name = 'song'
 
     def get_queryset(self):

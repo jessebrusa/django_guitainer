@@ -10,6 +10,7 @@
         {% else %}
             <button id="favoriteButton" onclick="toggleFavorite(false)">Add to Favorites</button>
         {% endif %}
+        <a href="{% url 'group-list' song_id=song.id %}">Add to Group</a>
     {% endif %}
 
     <h1>Title: {{ song.title }}</h1>
