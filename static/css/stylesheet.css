@@ -4,6 +4,20 @@
     transition: max-height 0.3s ease-out;
 }
 
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+    background-color: #f5f5f5;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 100vh;
+    background-image: linear-gradient(to bottom right, #010012 25%, #141C38);
+    width: 100%;
+}
+
 .custom-dropdown {
     display: none;
 }
@@ -11,6 +25,24 @@
 .custom-dropdown.show {
     display: block;
 }
+
+footer { 
+    width: 100%;
+    height: 60px;
+    background-image: linear-gradient(to right, transparent, #141C38 70%, transparent);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #EBEFFF;
+}
+
+footer p {
+    margin: 20px;
+    font-size: 1.5rem;
+}
+
+
+
 /* Hide the first navbar on screens smaller than 800px */
 @media (max-width: 599px) {
     .navbar.d-none.d-lg-block {

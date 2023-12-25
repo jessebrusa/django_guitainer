@@ -13,15 +13,21 @@
 
 <body>
 
-    Welcome to Guitainer
+    <h1>Welcome to Guitainer</h1>
 
     <div class="middleContainer">
 
         <div class="leftSideBar">
             <div class="links">
-                <a href="{% url 'catalogue' %}">Catalogue</a>
-                <a href="{% url 'login' %}">Login</a>
-                <a href="{% url 'register' %}">Register</a>
+                <div class="linkContainer">
+                    <a href="{% url 'catalogue' %}">Catalogue</a>
+                </div>
+                <div class="linkContainer">
+                    <a href="{% url 'login' %}">Login</a>
+                </div>
+                <div class="linkContainer">
+                    <a href="{% url 'register' %}">Register</a>
+                </div>    
             </div>
 
         </div>
