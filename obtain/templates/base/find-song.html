@@ -1,27 +1,57 @@
 {% extends 'base/main.html' %}
 
 {% block content %}
-    <form>
-        <label for="title-input">Title:</label>
-        <input type="text" id="title-input" name="title-input" required><br><br>
+    <div class="bodyContainer">
 
-        <label for="artist-input">Artist:</label>
-        <input type="text" id="artist-input" name="artist-input"><br><br>
+        <div class="headerContainer" >
+            <h1>Find Song</h1>
+        </div>
+    
+        <form class="standardForm">
+            <div class="rowItems">
+                <label for="title-input">Title:</label>
+                <input type="text" id="title-input" name="title-input" required>
+            </div>
+            
+            <div class="rowItems">
+                <label for="artist-input">Artist:</label>
+                <input type="text" id="artist-input" name="artist-input">
+            </div>
 
-        <label for="lyrics-boolean">Include Lyrics:</label>
-        <input type="checkbox" id="lyrics-boolean" name="lyrics-boolean"><br><br>
+            <div class="standardFormBottom">
+                <div class="standardFormBottomLeft">
+                    <div class="checkboxContainer">
+                        <label for="lyrics-boolean" class="checkboxLabel">Lyrics:</label>
+                        <input type="checkbox" id="lyrics-boolean" name="lyrics-boolean" class="checkbox">
+                    </div>
+                    
+                    <div class="checkboxContainer">
+                        <label for="mp3-boolean">MP3:</label>
+                        <input type="checkbox" id="mp3-boolean" name="mp3-boolean">
+                    </div>
+                    
+                    <div class="checkboxContainer">
+                        <label for="karaoke-boolean">Karaoke:</label>
+                        <input type="checkbox" id="karaoke-boolean" name="karaoke-boolean">
+                    </div>
+                    
+                    <div class="checkboxContainer">
+                        <label for="tab-boolean">Tab:</label>
+                        <input type="checkbox" id="tab-boolean" name="tab-boolean">
+                    </div>
+                </div>
 
-        <label for="mp3-boolean">Include MP3:</label>
-        <input type="checkbox" id="mp3-boolean" name="mp3-boolean"><br><br>
+                <div class="standardFormBottomRight">
+                    <div class="loader"></div>
+                </div>
+                
+            </div>
 
-        <label for="karaoke-boolean">Include Karaoke:</label>
-        <input type="checkbox" id="karaoke-boolean" name="karaoke-boolean"><br><br>
+            <button type="submit" value="Submit">Submit</button>
+        </form>
+    </div>
 
-        <label for="tab-boolean">Include Tab:</label>
-        <input type="checkbox" id="tab-boolean" name="tab-boolean"><br><br>
-
-        <button type="submit" value="Submit">Submit</button>
-    </form>
+    <div class="phantomFormDiv"></div>
 
     {% load static %}
     <script src="{% static 'js/main.js' %}"></script>
@@ -96,5 +126,6 @@
                 });
             });
         });
+
     </script>
 {% endblock %}
