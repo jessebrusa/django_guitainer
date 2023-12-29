@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline' https://ajax.googleapis.com https://stackpath.bootstrapcdn.com">
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline' https://ajax.googleapis.com https://stackpath.bootstrapcdn.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com">
     <link rel="icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}" />  
     <link rel="stylesheet" href="{% static 'css/stylesheet.css' %}">
     <title>Guitainer</title>
@@ -13,6 +13,5 @@
     {% include 'base/nav.html' %}
     {% block content %}
     {% endblock %}
-    {% include 'base/footer.html' %}
 </body>
 </html>

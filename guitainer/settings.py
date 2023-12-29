@@ -46,10 +46,11 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'guitainer.urls'
 
+CSP_FONT_SRC = ("'self'", 'https://fonts.gstatic.com')
 CSP_FRAME_ANCESTORS = ("'self'", "http://127.0.0.1:8000/")
 CSP_IMG_SRC = ("*",)
 CSP_MEDIA_SRC = ("'self'", "https://storage.googleapis.com")
-CSP_STYLE_SRC = ("'self'", "'unsafe-inline'")
+CSP_STYLE_SRC = ("'self'", "'unsafe-inline'", 'https://fonts.googleapis.com')
 CSP_DEFAULT_SRC = ("'self'",)
 CSP_SCRIPT_SRC = ("'self'", "'unsafe-inline'", "https://ajax.googleapis.com", "https://stackpath.bootstrapcdn.com")
 
