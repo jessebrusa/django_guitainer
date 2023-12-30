@@ -1,21 +1,42 @@
 {% extends 'base/main.html' %}
 
+{% load widget_tweaks %}
+
 {% block content %}
-    <h1>Login</h1>
-    <form method="post" action="{% url 'register' %}">
-        {% csrf_token %}
-        <label for="id_username">Username:</label>
-        {{ form.username }}
-        
-        <label for="id_email">Email:</label>
-        {{ form.email }}
-        
-        <label for="id_password1">Password:</label>
-        {{ form.password1 }}
-        
-        <label for="id_password2">Confirm Password:</label>
-        {{ form.password2 }}
-        
-        <button type="submit">Login</button>
-    </form>
+    <div class="bodyContainer gap25">
+
+        <div class="headerContainer">
+            <h1>Register</h1>
+        </div>
+
+        <form method="post" action="{% url 'register' %}" class="standardForm">
+            {% csrf_token %}
+
+            <div class="rowItems">
+                <label for="{{ form.username.id_for_label }}" class="loginRegisterLabel">Username:</label>
+                {{ form.username|add_class:"inputBar" }}
+            </div>
+
+            <div class="rowItems">
+                <label for="{{ form.email.id_for_label }}" class="loginRegisterLabel">Email:</label>
+                {{ form.email|add_class:"inputBar" }}
+            </div>
+
+            <div class="rowItems">
+                <label for="{{ form.password1.id_for_label }}" class="loginRegisterLabel">Password:</label>
+                {{ form.password1|add_class:"inputBar" }}
+            </div>
+
+            <div class="rowItems">
+                <label for="{{ form.password2.id_for_label }}" class="loginRegisterLabel">Confirm Password:</label>
+                {{ form.password2|add_class:"inputBar" }}
+            </div>
+
+            <button type="submit">Register</button>
+
+        </form>
+
+        {% include 'base/footer.html' %}
+
+    </div>
 {% endblock %}

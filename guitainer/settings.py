@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     'obtain',
     'groups',
     'dashboard',
+    'widget_tweaks',
 ]
 
 MIDDLEWARE = [

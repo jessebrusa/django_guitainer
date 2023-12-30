@@ -1,10 +1,32 @@
 {% extends 'base/main.html' %}
 
+{% load widget_tweaks %}
+
 {% block content %}
-    <h1>Login</h1>
-    <form method="post" action="{% url 'login' %}">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Login</button>
-    </form>
+    <div class="bodyContainer gap25">
+
+        <div class="headerContainer" >
+            <h1>Login</h1>
+        </div>
+
+        <form method="post" class="standardForm">
+            {% csrf_token %}
+
+            <div class="rowItems">
+                <label for="{{ form.username.id_for_label }}" class="loginRegisterLabel">Username:</label>
+                {{ form.username|add_class:"inputBar" }}
+            </div>
+
+            <div class="rowItems">
+                <label for="{{ form.password.id_for_label }}" class="loginRegisterLabel">Password:</label>
+                {{ form.password|add_class:"inputBar" }}
+            </div>
+
+            <button type="submit">Submit</button>
+
+        </form>
+
+        {% include 'base/footer.html' %}
+
+    </div>
 {% endblock %}

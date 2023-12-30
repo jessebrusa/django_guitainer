@@ -1,9 +1,57 @@
 {% extends 'base/main.html' %}
 
+{% load widget_tweaks %}
+
 {% block content %}
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Submit</button>
-    </form>
+    <div class="bodyContainer gap25">
+
+        <div class="headerContainer" >
+            <h1>Create Your Own Guitainer</h1>
+        </div>
+
+        <form method="post" enctype="multipart/form-data" class="standardForm">
+            {% csrf_token %}
+
+            <div class="rowItems">
+                <label for="{{ form.title.id_for_label }}">Title:</label>
+                {{ form.title|add_class:"inputBar" }}
+            </div>
+
+            <div class="rowItems">
+                <label for="{{ form.artist.id_for_label }}">Artist:</label>
+                {{ form.artist|add_class:"inputBar" }}
+            </div>
+
+            <div class="rowItems">
+                <label for="{{ form.lyric.id_for_label }}">Lyric:</label>
+                {{ form.lyric|add_class:"inputText" }}
+            </div>
+
+            <div class="rowItems">
+                <label for="{{ form.img_address.id_for_label }}">Image Address:</label>
+                {{ form.img_address|add_class:"inputText" }}
+            </div>
+
+            <div class="rowItems">
+                <label for="{{ form.mp3.id_for_label }}">MP3:</label>
+                {{ form.mp3|add_class:"inputFile" }}
+            </div>
+
+            <div class="rowItems">
+                <label for="{{ form.karaoke.id_for_label }}">Karaoke:</label>
+                {{ form.karaoke|add_class:"inputFile" }}
+            </div>
+
+            <div class="rowItems">
+                <label for="{{ form.tabs.id_for_label }}">Tabs:</label>
+                {{ form.tabs|add_class:"inputFile" }}
+            </div>
+
+            <button type="submit">Submit</button>
+
+        </form>
+
+        {% include 'base/footer.html' %}
+
+    </div>
 {% endblock %}
