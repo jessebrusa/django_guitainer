@@ -286,6 +286,11 @@ footer p {
     .headerItems {
         justify-content: center;
     }
+    
+    .headerItems .headerContainer h1 {
+        margin: 0;
+        font-size: 3.5rem;
+    }
 }
 
 
@@ -303,9 +308,7 @@ footer p {
         font-size: 1.5rem;
     }
 
-    .headerItems .headerContainer h1 {
-        margin: 0;
-    }
+    
 }
 
 /* Hide the second navbar on screens larger than 800px */
