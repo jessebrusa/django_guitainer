@@ -12,7 +12,7 @@
             <input type="text" name="search" placeholder="Search">
             <button type="submit">Search</button>
         </form>
-        
+
     </div>
     
 
@@ -30,6 +30,8 @@
             </li>
         {% endfor %}
     </ul>
+
+    {% include 'base/footer.html' %}
 
     {% load static %}
     <script src="{% static 'js/main.js' %}"></script>

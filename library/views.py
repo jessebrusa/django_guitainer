@@ -7,7 +7,7 @@ from django.views.generic import ListView, DetailView
 from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.conf import settings
-
+from django.db.models import Q
 
 from .models import Song, UserSong, SongUrl, SongAttempt   
 
@@ -21,8 +21,10 @@ class LibraryView(LoginRequiredMixin, ListView):
     template_name = 'base/library.html' 
     context_object_name = 'song_list'
 
+    
+
     def get_queryset(self):
-        queryset = Song.objects.select_related('songurl').filter(usersong__user=self.request.user)
+        queryset = Song.objects.select_related('songurl').filter(Q(created=self.request.user) | Q(usersong__user=self.request.user))
         search_query = self.request.GET.get('search', None)
         if search_query:
             queryset = queryset.filter(title__icontains=search_query)
@@ -34,9 +36,12 @@ class CatalogueView(LoginRequiredMixin, ListView):
     context_object_name = 'song_list'
 
     def get_queryset(self):
-        return Song.objects.select_related('songurl').filter(usersong__user=self.request.user, created__isnull=True)
-
-
+        user_songs = UserSong.objects.filter(user=self.request.user).values_list('song', flat=True)
+        queryset = Song.objects.select_related('songurl').exclude(created__isnull=False).exclude(id__in=user_songs)
+        search_query = self.request.GET.get('search', None)
+        if search_query:
+            queryset = queryset.filter(title__icontains=search_query)
+        return queryset
 class AddToLibraryView(LoginRequiredMixin, View):
     def post(self, request, song_id):
         song = get_object_or_404(Song, id=song_id)

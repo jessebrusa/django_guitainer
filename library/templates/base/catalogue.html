@@ -2,8 +2,17 @@
 
 {% block content %}
 
-    <div class="headerContainer" >
-        <h1>Library</h1>
+    <div class="headerItems">
+
+        <div class="headerContainer" >
+            <h1>Catalogue</h1>
+        </div>
+
+        <form method="get" action="{% url 'catalogue' %}" class="searchContainer">
+            <input type="text" name="search" placeholder="Search">
+            <button type="submit">Search</button>
+        </form>
+
     </div>
 
     <ul>

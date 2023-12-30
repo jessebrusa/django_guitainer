@@ -108,7 +108,10 @@
             <li class="nav-item"><a class="nav-link" href="{% url 'find-song' %}">Find Song</a></li>
             {% if request.path == '/library/' %}
                 <li class="nav-item"><a class="nav-link" href="{% url 'catalogue' %}">Catalogue</a></li>
+            {% elif request.path == '/catalogue/'%}
+                <li class="nav-item"><a class="nav-link" href="{% url 'library' %}">Library</a></li>
             {% else %}
+                <li class="nav-item"><a class="nav-link" href="{% url 'catalogue' %}">Catalogue</a></li>
                 <li class="nav-item"><a class="nav-link" href="{% url 'library' %}">Library</a></li>
             {% endif %}
             <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Logout</a></li>
