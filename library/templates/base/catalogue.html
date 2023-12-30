@@ -1,8 +1,11 @@
 {% extends 'base/main.html' %}
 
 {% block content %}
-    <h1>Guitainer</h1>
-    <hr>
+
+    <div class="headerContainer" >
+        <h1>Library</h1>
+    </div>
+
     <ul>
         {% for song in song_list %}
             <li data-song-id="{{ song.id }}">

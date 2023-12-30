@@ -63,6 +63,57 @@ footer p {
     gap: 1.5rem;
 }
 
+.headerItems {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 1rem;
+}
+
+.headerItems .headerContainer {
+    width: 50%;
+    text-align: left;
+    margin: 1rem 0;
+}
+
+.headerItems .headerContainer h1 {
+    margin-left: 3rem;
+}
+
+.headerItems .searchContainer {
+    margin-right: 1rem;
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+}
+
+.headerItems .searchContainer input {
+    background-color: #FFF3EB;
+    border-radius: 2rem;
+    font-size: 2.5rem;
+    min-width: 10rem;
+    text-indent: 1rem;
+}
+
+.headerItems .searchContainer button {
+    font-size: 1rem;
+    background-color: #E57B2E;
+    padding: .5rem 1rem .5rem 1rem;
+    border-radius: .5rem;
+    color: #FFF3EB;
+    font-weight: bolder;
+}
+
+.headerItems .searchContainer button:hover {
+    background-color: #5C6687;
+    transform: scale(1.1);
+}
+
+.headerItems .searchContainer button:active {
+    transform: scale(1.05);
+}
+
 .headerContainer {
     background-image: linear-gradient(to right, transparent, rgba(229, 123, 46, .8) 40%, transparent);
     width: 80%;
@@ -184,6 +235,11 @@ footer p {
 
 .standardForm button:hover {
     background-color: #5C6687;
+    transform: scale(1.1);
+}
+
+.standardForm button:active {
+    transform: scale(1.05);
 }
 
 .standardForm .checkboxContainer {

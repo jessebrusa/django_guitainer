@@ -1,8 +1,21 @@
 {% extends 'base/main.html' %}
 
 {% block content %}
-    <h1>Guitainer</h1>
-    <hr>
+
+    <div class="headerItems">
+
+        <div class="headerContainer" >
+            <h1>Library</h1>
+        </div>
+
+        <form method="get" action="{% url 'library' %}" class="searchContainer">
+            <input type="text" name="search" placeholder="Search">
+            <button type="submit">Search</button>
+        </form>
+        
+    </div>
+    
+
     <ul>
         {% for song in song_list %}
             <li data-song-id="{{ song.id }}">
