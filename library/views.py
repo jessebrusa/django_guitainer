@@ -26,6 +26,7 @@ class LibraryView(LoginRequiredMixin, ListView):
         search_query = self.request.GET.get('search', None)
         if search_query:
             queryset = queryset.filter(title__icontains=search_query)
+        queryset = queryset.order_by('title')  # order by title in ascending order
         return queryset
 
 class CatalogueView(LoginRequiredMixin, ListView):
@@ -39,7 +40,10 @@ class CatalogueView(LoginRequiredMixin, ListView):
         search_query = self.request.GET.get('search', None)
         if search_query:
             queryset = queryset.filter(title__icontains=search_query)
+        queryset = queryset.order_by('title')  # order by title in ascending order
         return queryset
+    
+
 class AddToLibraryView(LoginRequiredMixin, View):
     def post(self, request, song_id):
         song = get_object_or_404(Song, id=song_id)

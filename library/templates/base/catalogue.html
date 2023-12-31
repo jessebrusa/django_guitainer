@@ -2,33 +2,57 @@
 
 {% block content %}
 
-    <div class="headerItems">
+    <div class="bodyContainer">
 
-        <div class="headerContainer" >
-            <h1>Catalogue</h1>
+        <div class="headerItems">
+
+            <div class="headerContainer catalogueHeaderContainer" >
+                <h1 class="catalogueHeader">Catalogue</h1>
+            </div>
+
+            <form method="get" action="{% url 'catalogue' %}" class="searchContainer">
+                <input type="text" name="search" placeholder="Search">
+                <button type="submit">Search</button>
+            </form>
+
         </div>
 
-        <form method="get" action="{% url 'catalogue' %}" class="searchContainer">
-            <input type="text" name="search" placeholder="Search">
-            <button type="submit">Search</button>
-        </form>
+        <ul class="songListContainerVert">
+            {% for song in song_list %}
+                <li data-song-id="{{ song.id }}" class="musicCardVert">
+                    <a href="{% url 'song-detail' song.id %}">
+                        <p>{{ song.title }}</p>
+                        <p>{{ song.artist }}</p>
+                        <img src="{{ song.songurl.img }}" alt="picture of song from google">
+                    </a>
+                    <button class="remove-item" data-item-id="{{ song.id }}" data-item-title="{{ song.title }}" data-item-action="remove" data-item-location="library">
+                        Remove from Library
+                    </button>
+                </li>
+            {% endfor %}
+        </ul>
+
+        <ul class="songListContainerHor">
+            {% for song in song_list %}
+                <li data-song-id="{{ song.id }}" class="musicCardHor">
+                    <a href="{% url 'song-detail' song.id %}">
+                        <img src="{{ song.songurl.img }}" alt="picture of song from google">
+                        <div class="titleArtist">
+                            <p class="title">{{ song.title }}</p>
+                            <p>{{ song.artist }}</p>  
+                        </div>
+                    </a>
+                </li>    
+                <button class="remove-item" data-item-id="{{ song.id }}" data-item-title="{{ song.title }}" data-item-action="remove" data-item-location="library">
+                    Remove from Library
+                </button>            
+            {% endfor %}
+        </ul>
+
+
+        {% include 'base/footer.html' %}
 
     </div>
-
-    <ul>
-        {% for song in song_list %}
-            <li data-song-id="{{ song.id }}">
-                <p>Title: {{ song.title }}<p>
-                <p>Artist: {{ song.artist }}</p>
-                <p><img src="{{ song.songurl.img }}" alt="picture of song from google"></p>  
-                <p><a href="{% url 'song-detail' song.id %}">View Song</a></p>
-                <button class="remove-item" data-item-id="{{ song.id }}" data-item-title="{{ song.title }}" data-item-action="add" data-item-location="library">
-                    Add to Library
-                </button>                
-                <hr>
-            </li>   
-        {% endfor %}
-    </ul>
 
     {% load static %}
     <script src="{% static 'js/main.js' %}"></script>

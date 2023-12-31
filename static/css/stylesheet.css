@@ -453,6 +453,10 @@ footer p {
 
 
 @media (max-width: 899px) {
+    .catalogueHeader {
+        font-size: 3rem !important;
+    }
+
     .navbar.d-none.d-lg-block {
         display: none !important;
     }
