@@ -18,18 +18,44 @@
         </div>
         
 
-        <ul class="songListContainer">
+        <ul class="songListContainerVert">
             {% for song in song_list %}
                 <li data-song-id="{{ song.id }}" class="musicCardVert">
                     <a href="{% url 'song-detail' song.id %}">
                         <p>{{ song.title }}</p>
                         <p>{{ song.artist }}</p>
                         <img src="{{ song.songurl.img }}" alt="picture of song from google">
-                    </a>    
+                    </a>
+                    {% if song.created != user %}    
+                        <button class="remove-item" data-item-id="{{ song.id }}" data-item-title="{{ song.title }}" data-item-action="remove" data-item-location="library">
+                            Remove from Library
+                        </button>
+                    {% else %} 
+                        <button>User Created</button>
+                    {% endif %}               
+                </li>
+            {% endfor %}
+        </ul>
+
+        <ul class="songListContainerHor">
+            {% for song in song_list %}
+                <li data-song-id="{{ song.id }}" class="musicCardHor">
+                    <a href="{% url 'song-detail' song.id %}">
+                        <img src="{{ song.songurl.img }}" alt="picture of song from google">
+                        <div class="titleArtist">
+                            <p class="title">{{ song.title }}</p>
+                            <p>{{ song.artist }}</p>  
+                        </div>
+                    </a>
+                </li>    
+                {% if song.created != user %}    
                     <button class="remove-item" data-item-id="{{ song.id }}" data-item-title="{{ song.title }}" data-item-action="remove" data-item-location="library">
                         Remove from Library
-                    </button>                
-                </li>
+                    </button>
+                {% else %} 
+                    <button>User Created</button>
+                {% endif %}               
+                
             {% endfor %}
         </ul>
 

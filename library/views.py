@@ -21,8 +21,6 @@ class LibraryView(LoginRequiredMixin, ListView):
     template_name = 'base/library.html' 
     context_object_name = 'song_list'
 
-    
-
     def get_queryset(self):
         queryset = Song.objects.select_related('songurl').filter(Q(created=self.request.user) | Q(usersong__user=self.request.user))
         search_query = self.request.GET.get('search', None)
