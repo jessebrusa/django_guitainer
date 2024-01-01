@@ -7,10 +7,15 @@ function handleItemRemoval(csrf_token) {
             var itemLocation = this.dataset.itemLocation;
 
             let body = document.body;
+            let overlayDiv = document.createElement('div');
+            overlayDiv.id = 'overlayDiv';
             let confirmDiv = document.createElement('div');
+            confirmDiv.id = 'confirmDiv';
             let confirmText = document.createElement('p');
+            confirmText.classList.add('confirmText');
             if (itemAction === 'add') {
                 confirmText.textContent = `Are you sure you want to add ${itemTitle} to ${itemLocation}?`;
+                confirmDiv.id = 'confirmDivAdd';
             } 
             else {
                 confirmText.textContent = `Are you sure you want to remove ${itemTitle} from ${itemLocation}?`;
@@ -20,9 +25,11 @@ function handleItemRemoval(csrf_token) {
             confirmButtonYes.textContent = 'Yes';
             confirmButtonYes.id = 'confirmButtonYes';
             let confirmButtonNo = document.createElement('button');
-            confirmButtonNo.textContent = 'No';
+            confirmButtonNo.id = 'cancelButton'
+            confirmButtonNo.textContent = 'Cancel';
 
-            body.appendChild(confirmDiv);
+            body.appendChild(overlayDiv);
+            overlayDiv.appendChild(confirmDiv);
             confirmDiv.appendChild(confirmText);
             confirmDiv.appendChild(buttonDiv);
             buttonDiv.appendChild(confirmButtonYes);
@@ -30,6 +37,7 @@ function handleItemRemoval(csrf_token) {
             
             if (itemAction === 'add') {
                 postUrl = '/add-to-library/';
+                confirmButtonYes.id = 'confirmButtonYesAdd';
             }
             else {
                 postUrl = '/remove-from-library/';
@@ -62,10 +70,12 @@ function handleItemRemoval(csrf_token) {
                         location.reload();
                     }
                 });
+                overlayDiv.remove();
                 confirmDiv.remove();
             });
 
             confirmButtonNo.addEventListener('click', function() {
+                overlayDiv.remove();
                 confirmDiv.remove();
             }); 
         })

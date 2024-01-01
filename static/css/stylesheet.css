@@ -35,7 +35,6 @@ body {
     align-items: center;
 }
 
-
 .custom-dropdown {
     display: none;
 }
@@ -143,6 +142,124 @@ footer p {
     height: 7.5rem;
     animation: spin 2s linear infinite;
     display: none;
+}
+
+#overlayDiv {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 4;  
+    background: rgba(0, 0, 0, 0.5);  
+}
+
+#overlayDiv #confirmDiv {
+    position: fixed;  
+    top: 50%;         
+    left: 50%;       
+    transform: translate(-50%, -50%);
+    display: flex;    
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem; 
+    background: #FFE5E5;  
+    border: 5px solid #401B00; 
+    display: flex;    
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+}
+
+#overlayDiv #confirmDivAdd {
+    position: fixed;  
+    top: 50%;         
+    left: 50%;       
+    transform: translate(-50%, -50%);
+    background-color: #EDFFEB;
+    border: 5px solid #401B00;
+    display: flex;    
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    display: flex;    
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+}
+
+#overlayDiv .confirmText {
+    font-size: 2rem;
+    margin: .5rem;
+    padding: 0;
+    color: #401B00;
+    text-align: center;
+    font-weight: bolder;
+}
+
+#overlayDiv #confirmDiv #confirmButtonYes {
+    font-size: 1.5rem;
+    background-color: #BA1C1C;
+    border-radius: .5rem;
+    color: #FFE5E5;
+    font-weight: bolder;
+    margin: .5rem;
+    width: 8rem;
+    padding: .5rem 1rem .5rem 1rem;
+}
+
+#overlayDiv #confirmButtonYesAdd {
+    background-color: #40CC29;
+    border-radius: .5rem;
+    color: #FFE5E5;
+    font-weight: bolder;
+    margin: .5rem;
+    width: 8rem;
+    padding: .5rem 1rem .5rem 1rem;
+    font-size: 1.5rem;
+
+}
+
+#overlayDiv #confirmButtonYes:hover {
+    background-color: #610505;
+    transform: scale(1.1);
+}   
+
+#overlayDiv #confirmButtonYes:active {
+    transform: scale(1.05);
+}
+
+#overlayDiv #confirmButtonYesAdd:hover {
+    background-color: #115C05;
+    transform: scale(1.1);
+}
+
+#overlayDiv #confirmButtonYesAdd:active {
+    transform: scale(1.05);
+}   
+
+#overlayDiv #cancelButton {
+    font-size: 1.5rem;
+    background-color: #5C6687;
+    border-radius: .5rem;
+    color: #FFF3EB;
+    font-weight: bolder;
+    margin: .5rem;
+    width: 8rem;
+    padding: .5rem 1rem .5rem 1rem;
+}
+
+#overlayDiv #cancelButton:hover {
+    background-color: #2A324D;
+    transform: scale(1.1);
+}
+
+#overlayDiv #cancelButton:active {
+    transform: scale(1.05);
 }
 
 .songListContainerHor {
