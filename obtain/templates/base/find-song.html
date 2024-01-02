@@ -21,22 +21,22 @@
             <div class="standardFormBottom">
                 <div class="standardFormBottomLeft">
                     <div class="checkboxContainer">
-                        <label for="lyrics-boolean" class="checkboxLabel">Lyrics:</label>
+                        <label for="lyrics-boolean" class="checkboxLabel" id="lyricsLabel">Lyrics:</label>
                         <input type="checkbox" id="lyrics-boolean" name="lyrics-boolean" class="checkbox">
                     </div>
                     
                     <div class="checkboxContainer">
-                        <label for="mp3-boolean">MP3:</label>
+                        <label for="mp3-boolean" id="mp3Label">MP3:</label>
                         <input type="checkbox" id="mp3-boolean" name="mp3-boolean">
                     </div>
                     
                     <div class="checkboxContainer">
-                        <label for="karaoke-boolean">Karaoke:</label>
+                        <label for="karaoke-boolean" id="karaokeLabel">Karaoke:</label>
                         <input type="checkbox" id="karaoke-boolean" name="karaoke-boolean">
                     </div>
                     
                     <div class="checkboxContainer">
-                        <label for="tab-boolean">Tab:</label>
+                        <label for="tab-boolean" id="tabLabel">Tab:</label>
                         <input type="checkbox" id="tab-boolean" name="tab-boolean">
                     </div>
                 </div>
@@ -64,6 +64,8 @@
             var form = document.querySelector('form');
             form.addEventListener('submit', function(event) {
                 event.preventDefault();
+                let loader = document.querySelector('.loader');
+                loader.style.opacity = 1;
                 var title = document.getElementById('title-input').value;
                 var artist = document.getElementById('artist-input').value;
                 var lyrics = document.getElementById('lyrics-boolean').checked;

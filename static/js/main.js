@@ -125,13 +125,19 @@ function createConfirmationDialog(text, url, csrftoken, redirect) {
 }
 
 
-document.getElementById('dropdownButton').addEventListener('click', function() {
-    var dropdownMenu = document.getElementById('dropdownMenu');
-    dropdownMenu.classList.toggle('show');
-});
-
+let dropdownButton = document.getElementById('dropdownButton')
+if (dropdownButton) {
+    dropdownButton.addEventListener('click', function() {
+        var dropdownMenu = document.getElementById('dropdownMenu');
+        dropdownMenu.classList.toggle('show');
+    });
+}
 
 async function fetchUrls(urls, imgUrl, lyricsUrl, mp3Url, karaokeUrl, tabUrl) {
+    let lyricsLabel = document.getElementById('lyricsLabel');
+    let mp3Label = document.getElementById('mp3Label');
+    let karaokeLabel = document.getElementById('karaokeLabel');
+    let tabLabel = document.getElementById('tabLabel');
     var promises = urls.map(async url => {
         if (url !== null) {
             try {
@@ -148,27 +154,35 @@ async function fetchUrls(urls, imgUrl, lyricsUrl, mp3Url, karaokeUrl, tabUrl) {
                 } else if (url === lyricsUrl) {
                     if (response.ok) {
                         console.log('Lyrics success');
+                        lyricsLabel.style.color = '#27AB11';
                     } else {
                         console.log('Lyrics failure');
+                        lyricsLabel.style.color = '#8C0E0E';
                     }
                 } else if (url === mp3Url) {
                     if (response.ok) {
                         console.log('Mp3 success');
+                        mp3Label.style.color = '#27AB11';
                     } else {
                         console.log('Mp3 failure');
+                        mp3Label.style.color = '#8C0E0E';
                     }
                 } else if (url === karaokeUrl) {
                     if (response.ok) {
                         console.log('Karaoke success');
+                        karaokeLabel.style.color = '#27AB11';
                     } else {
                         console.log('Karaoke failure');
+                        karaokeLabel.style.color = '#8C0E0E';
                     }
                 }
                 else if (url === tabUrl) {
                     if (response.ok) {
                         console.log('Tab success');
+                        tabLabel.style.color = '#27AB11';
                     } else {
                         console.log('Tab failure');
+                        tabLabel.style.color = '#8C0E0E';
                     }
                 }
 
