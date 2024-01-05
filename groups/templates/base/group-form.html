@@ -1,9 +1,27 @@
 {% extends 'base/main.html' %}
 
 {% block content %}
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Create Group</button>
-    </form>
+    <div class="bodyContainer">
+
+        <div class="headerContainer">
+            <h1>Create Group</h1>
+        </div>
+
+        <form method="post" class="standardForm">
+            {% csrf_token %}
+            <div class="rowItems createGroupForm">
+                <label for="{{ form.name.id_for_label }}" data-content="{{ form.name.label }}:">{{ form.name.label }}:</label>
+                <input type="text" id="{{ form.name.id_for_label }}" name="{{ form.name.html_name }}" class="inputBar" required>
+            </div>
+
+            <div class="rowItems">
+                <label for="{{ form.message.id_for_label }}" data-content="{{ form.message.label }}:" style="font-size: 2rem;">{{ form.message.label }}:</label>
+                <textarea id="{{ form.message.id_for_label }}" name="{{ form.message.html_name }}" class="inputText" style="font-size: 1rem;"></textarea>
+            </div>
+            <button type="submit">Create Group</button>
+        </form>
+
+        {% include 'base/footer.html' %}
+
+    </div>
 {% endblock %}

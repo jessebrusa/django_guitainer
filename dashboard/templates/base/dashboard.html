@@ -1,39 +1,132 @@
 {% extends 'base/main.html' %}
 
 {% block content %}
-    <h1>Welcome, {{ user.username }}</h1>
 
-    <div>
-        <h2>Favorite Songs</h2>
-        {% for song in favorite_songs %}
-            <p>{{ song.title }}</p>
-            <p>{{ song.artist }}</p>
-            <img src="{{ song.songurl.img }}" alt="Song Image" width="200" height="200">
-            <a href="{% url 'song-detail' song.id %}">View Song</a>
-        {% empty %}
-            <p>No favorite songs.</p>
-        {% endfor %}
+    <div class="bodyContainer">
+
+        <div class="headerContainer" >
+            <h1>Welcome, {{ user.username }}</h1>
+        </div>
+
+        <div class="dashboardContainer">
+
+            <div>
+                <div class="headerContainer">
+                    <h2>Favorite Songs</h2>
+                </div>
+
+                <ul class="songListContainerHor" style="display: flex; gap: 1rem;">
+                    {% for song in favorite_songs %}
+                        <li data-song-id="{{ song.id }}" class="musicCardHor">
+                            <a href="{% url 'song-detail' song.id %}">
+                                <img src="{{ song.songurl.img }}" alt="picture of song from google">
+                                <div class="titleArtist">
+                                    <p class="title">{{ song.title }}</p>
+                                    <p>{{ song.artist }}</p>  
+                                </div>
+                            </a>
+                    {% empty %}
+                        <p>No favorite songs.</p>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <div>
+                <div class="headerContainer">
+                    <h2>Created Songs</h2>
+                </div>
+                <ul class="songListContainerHor" style="display: flex;">
+                    {% for song in created_songs %}
+                    <li data-song-id="{{ song.id }}" class="musicCardHor">
+                        <a href="{% url 'create-guitainer' %}">
+                            <img src="{{ song.songurl.img }}" alt="picture of song from google">
+                            <div class="titleArtist">
+                                <p class="title">{{ song.title }}</p>
+                                <p>{{ song.artist }}</p>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+                <button data-song-id="{{ song.id }}" data-song-title="{{ song.title }}" class="delete-song deleteBtn">Delete Song</button>
+                {% empty %}
+                    <p>No created songs.</p>
+                {% endfor %}
+                
+            </div>
+
+            <div>
+                <div class="headerContainer">
+                    <h2>Groups</h2>
+                </div>
+                <ul class="songListContainerHor" style="display: flex; gap: 1rem;">
+                    {% for group_user in user_groups %}
+                        {% if group_user.accept %}
+                            <li class="musicCardHor">
+                                <a href="{% url 'group-page' group_user.group.id %}">
+                                    <p class="groupName">{{ group_user.group.name }}</p>
+                                </a>
+                            </li>
+                        {% else %}
+                            <li class="musicCardHor">
+                                <a href="{% url 'group-page' group_user.group.id %}">
+                                    <p class="groupName">{{ group_user.group.name }}</p>
+                                </a>
+                                <div class="acceptDecline">
+                                    <button data-group-id="{{ group_user.group.id }}" data-group-name="{{ group_user.group.name }}" class="greenBtn">Accept</button>
+                                    <button data-group-id="{{ group_user.group.id }}" data-group-name="{{ group_user.group.name }}" data-user-id="{{ request.user.id }}" class="delete-group deleteBtn">Decline</button>
+                                </div>
+                            </li>
+                        {% endif %}
+                    {% empty %}
+                        <p>No Groups</p>
+                    {% endfor %}
+                </ul> 
+                <div class="button-container">
+                    <a href="{% url 'create-group' %}" class="createGroupBtn">Create Group</a>
+                </div>
+                
+
+            </div>
+
+        </div>
+
+        {% include 'base/footer.html' %}
+
     </div>
 
-    <div>
-        <h2>Created Songs</h2>
-        {% for song in created_songs %}
-            <p>{{ song.title }}</p>
-            <p>{{ song.artist }}</p>
-            <img src="{{ song.songurl.img }}" alt="Song Image" width="200" height="200">
-        {% empty %}
-            <p>No created songs.</p>
-        {% endfor %}
-    </div>
+    {% load static %}
+    <script src="{% static 'js/main.js' %}"></script>
+    <script>
+        var csrftoken = "{{ csrf_token }}";
 
-    <div>
-        <h2>Groups</h2>
-        {% for group in user_groups %}
-            <p>{{ group.name }}</p>
-            <a href="{% url 'group-page' group.id %}">View Group</a>
-        {% empty %}
-            <p>No groups.</p>
-        {% endfor %}
-        <a href="{% url 'create-group' %}">Create Group</a>
-    </div>
+        document.querySelectorAll('.delete-song').forEach(function(button) {
+            button.addEventListener('click', function() {
+                let songId = this.getAttribute('data-song-id');
+                let title = this.getAttribute('data-song-title')
+                var url = '/delete_song/' + songId + '/';
+                createConfirmationDialog(`Are you sure you want to delete ${title}?`, url, csrftoken, 'stay', 'red');
+            });
+        });
+
+        document.querySelectorAll('.deleteBtn').forEach(function(button){
+            button.addEventListener('click', function(){
+                let groupId = this.getAttribute('data-group-id');
+                let groupName = this.getAttribute('data-group-name');
+                let userId = this.getAttribute('data-user-id');
+                var url = '/remove-user/' + groupId + '/' + userId + '/';
+                createConfirmationDialog(`Are you sure you don't want to join this group "${groupName}"?`, url, csrftoken, 'stay', 'red');
+            });
+        });
+
+        document.querySelectorAll('.greenBtn').forEach(function(button){
+            button.addEventListener('click', function(){
+                let groupId = this.getAttribute('data-group-id');
+                let groupName = this.getAttribute('data-group-name');
+                var url = '/accept-user/' + groupId + '/';
+                createConfirmationDialog(`Are you sure you want to join this group ${groupName}?`, url, csrftoken, 'stay', 'green');
+            });
+        });
+        
+    </script>
+
 {% endblock %}

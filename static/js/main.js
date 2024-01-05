@@ -82,18 +82,29 @@ function handleItemRemoval(csrf_token) {
     });
 }
 
-function createConfirmationDialog(text, url, csrftoken, redirect) {
+function createConfirmationDialog(text, url, csrftoken, redirect, color) {
     let body = document.body;
+    let overlayDiv = document.createElement('div');
+    overlayDiv.id = 'overlayDiv';
     let confirmDiv = document.createElement('div');
+    confirmDiv.id = 'confirmDiv';
     let confirmText = document.createElement('p');
+    confirmText.classList.add('confirmText');
     confirmText.textContent = text;
     let buttonDiv = document.createElement('div');
     let confirmButtonYes = document.createElement('button');
+    confirmButtonYes.id = 'confirmButtonYes';
     confirmButtonYes.textContent = 'Yes';
     let confirmButtonNo = document.createElement('button');
+    confirmButtonNo.id = 'cancelButton'
     confirmButtonNo.textContent = 'No';
 
-    body.appendChild(confirmDiv);
+    if (color === 'green') {
+        confirmDiv.id = 'confirmDivAdd';
+    }
+
+    body.appendChild(overlayDiv);
+    overlayDiv.appendChild(confirmDiv);
     confirmDiv.appendChild(confirmText);
     confirmDiv.appendChild(buttonDiv);
     buttonDiv.appendChild(confirmButtonYes);
@@ -111,7 +122,8 @@ function createConfirmationDialog(text, url, csrftoken, redirect) {
             return response.json()
         }).then(function(data) {
             if (redirect === 'stay') {
-                location.reload(); 
+                location.reload();
+
             } else {
                 window.location.href = '/library/'; 
             }
@@ -120,7 +132,7 @@ function createConfirmationDialog(text, url, csrftoken, redirect) {
 
 
     confirmButtonNo.addEventListener('click', function() {
-        body.removeChild(confirmDiv);
+        body.removeChild(overlayDiv);
     });
 }
 

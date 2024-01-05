@@ -10,6 +10,7 @@ urlpatterns = [
     path('edit-message/<int:group_id>/', EditMessageView.as_view(), name='edit-message'),
     path('edit-group-name/<int:group_id>/', EditGroupNameView.as_view(), name='edit-group-name'),
     
+    path('accept-user/<int:group_id>/', AcceptGroupView.as_view(), name='accept-user'),
     path('remove-user/<int:group_id>/<int:user_id>/', RemoveUserView.as_view(), name='remove-user'),
     path('remove-song-group/<int:group_id>/<int:song_id>/', RemoveSongGroupView.as_view(), name='remove-song-group'),
     path('delete-group/<int:group_id>/', DeleteGroupView.as_view(), name='delete-group'),

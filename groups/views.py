@@ -55,8 +55,10 @@ class AddUserView(View):
 
 class RemoveUserView(View):
     def post(self, request, *args, **kwargs):
-        user_id = self.kwargs['user_id']
         group_id = self.kwargs['group_id']
+        user_id = self.kwargs['user_id']
+        
+        print('GroupUser objects:', [(gu.user_id, gu.group_id) for gu in GroupUser.objects.all()])
 
         try:
             group_user = GroupUser.objects.get(user_id=user_id, group_id=group_id)
@@ -141,7 +143,7 @@ class DeleteGroupView(View):
             return JsonResponse({'status': 'error'}, status=400)
         
 
-class CreateGroupView(CreateView):
+class CreateGroupView(LoginRequiredMixin, CreateView):
     model = Group
     form_class = GroupForm
     template_name = 'base/group-form.html'
@@ -149,7 +151,7 @@ class CreateGroupView(CreateView):
     def form_valid(self, form):
         form.instance.created_by = self.request.user
         response = super().form_valid(form)
-        GroupUser.objects.create(user=self.request.user, group=self.object, admin=True)
+        GroupUser.objects.create(user=self.request.user, group=self.object, admin=True, accept=True)
         return response
     
     def get_success_url(self):
@@ -179,4 +181,13 @@ class AddSongGroupView(LoginRequiredMixin, View):
         song = Song.objects.get(id=song_id)
         GroupSong.objects.create(group=group, song=song)
         GroupUser.objects.get_or_create(user=request.user, group=group)
+        return JsonResponse({'status': 'success'})
+    
+class AcceptGroupView(LoginRequiredMixin, View):
+    def post(self, request, *args, **kwargs):
+        group_id = self.kwargs.get('group_id')
+        user_id = request.user.id
+        group_user = GroupUser.objects.get(group_id=group_id, user_id=user_id)
+        group_user.accept = True
+        group_user.save()
         return JsonResponse({'status': 'success'})

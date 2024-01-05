@@ -15,6 +15,7 @@ class GroupUser(models.Model):
     group = models.ForeignKey(Group, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     admin = models.BooleanField(default=False)
+    accept = models.BooleanField(default=False)
 
     def __str__(self):
         return f'{self.user.username} in {self.group.name}'
