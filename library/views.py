@@ -29,14 +29,14 @@ class LibraryView(LoginRequiredMixin, ListView):
         queryset = queryset.order_by('title')  # order by title in ascending order
         return queryset
 
-class CatalogueView(LoginRequiredMixin, ListView):
+class CatalogueView(ListView):
     model = Song
     template_name = 'base/catalogue.html' 
     context_object_name = 'song_list'
 
     def get_queryset(self):
-        user_songs = UserSong.objects.filter(user=self.request.user).values_list('song', flat=True)
-        queryset = Song.objects.select_related('songurl').exclude(created__isnull=False).exclude(id__in=user_songs)
+        queryset = Song.objects.select_related('songurl').exclude(created__isnull=False)
+
         search_query = self.request.GET.get('search', None)
         if search_query:
             queryset = queryset.filter(title__icontains=search_query)
@@ -58,7 +58,7 @@ class RemoveFromLibraryView(LoginRequiredMixin, View):
         return JsonResponse({'status': 'success'})
 
 
-class SongDetailView(LoginRequiredMixin, DetailView):
+class SongDetailView(DetailView):
     model = Song
     template_name = 'base/song-detail.html'
     context_object_name = 'song'

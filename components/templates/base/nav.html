@@ -97,11 +97,12 @@
         margin: 0;  
         padding: 0;  
     }
+
 </style>
 
 {% load static %}
 <nav class="navbar navbar-expand-lg navbar-light bg-light d-none d-lg-block">
-    <ul class="navbar-nav">
+    <ul class="navbar-nav largeNavBar">
             <li style="margin-right: auto;"><a href="{% url 'landing-page' %}"><img src="{% static 'images/case-open.png' %}" alt="Case Open"></a></li>
         {% if user.is_authenticated %}
             <li class="nav-item"><a class="nav-link" href="{% url 'dashboard' %}">Dashboard</a></li>

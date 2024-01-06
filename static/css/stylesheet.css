@@ -715,6 +715,10 @@ footer p {
         font-size: 3.5rem;
     }
 
+    .largeNavBar li a {
+        font-size: 1rem;
+    }
+
     .songListContainer .musicCardVert button {
         display: block;
     }
@@ -729,6 +733,8 @@ footer p {
     .navbar.d-none.d-lg-block {
         display: none !important;
     }
+
+    
 
     .loader {
         width: 4.5rem;
@@ -751,6 +757,10 @@ footer p {
         display: flex;
     }
     
+    .headerContainer .dashboardHeader {
+        font-size: 2rem;
+    
+    }
 }
 
 @media (min-width: 900px) {
