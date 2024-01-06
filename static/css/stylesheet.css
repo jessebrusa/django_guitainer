@@ -569,6 +569,245 @@ footer p {
     border-bottom-left-radius: .25rem;
 }
 
+.songPageHeader {
+    margin: 1.5rem;
+    width: 98%;
+    min-height: 300px;
+    background-image: linear-gradient(to right, #E57B2E, transparent 90%);
+    border-radius: .5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap-reverse;
+}
+
+.songPageHeader .favGroupContainer {
+    flex: 1;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    min-width: 250px;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    gap: 2rem;
+}
+
+.songPageHeader .favGroupContainer button {
+    width: 100%;
+    border-radius: .5rem;
+    background: transparent;
+    border: none;
+    outline: none;
+    background-image: linear-gradient(to right, transparent, #2A324D, 
+    #2A324D, transparent);
+    min-height: 3rem;
+    color: #FFF3EB;
+    font-size: 2rem;
+    font-family: 'Roboto', sans-serif;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.5s ease;
+}
+
+.songPageHeader .favGroupContainer button:hover {
+    transform: translate(1.25rem, -.5rem) scale(1.1);
+    box-shadow: -10px 10px 20px rgba(0, 0, 0, 0.8);
+    background-color: #2A324D;
+}
+
+.songPageHeader .favGroupContainer button:active {
+    transform: scale(1.05);
+}
+
+.songPageHeader .favGroupContainer a {
+    width: 100%;
+    border-radius: .5rem;
+    background-image: linear-gradient(to right, transparent, #2A324D, 
+    #2A324D, transparent);
+    min-height: 3rem;
+    color: #FFF3EB;
+    font-size: 2rem;
+    font-family: 'Roboto', sans-serif;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.5s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+}
+
+.songPageHeader .favGroupContainer a:hover {
+    transform: translate(1.25rem, -.5rem) scale(1.1);
+    box-shadow: -10px 10px 20px rgba(0, 0, 0, 0.8);
+    background-color: #2A324D;
+}
+
+.songPageHeader .favGroupContainer a:active {
+    transform: scale(1.05);
+}
+
+.songPageHeader .songInfoContainer {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    min-width: 380px;
+}
+
+.songPageHeader .songInfoContainer h1 {
+    font-size: 3.25rem;
+    font-weight: bolder;
+    text-align: center;
+    color: #FFF3EB;
+    background-color: #401B00;
+    background-clip: text;
+    -webkit-text-stroke-color: transparent;
+    -webkit-text-stroke-width: 8px;
+    -webkit-background-clip: text;
+}
+
+.songPageHeader .songInfoContainer h2 {
+    font-size: 2.5rem;
+    font-weight: bolder;
+    text-align: center;
+    color: #401B00;
+    background-color: #FFF3EB;
+    background-clip: text;
+    -webkit-text-stroke-color: transparent;
+    -webkit-text-stroke-width: 4px;
+    -webkit-background-clip: text;
+}
+
+.songPageHeader .songImageContainer {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    min-width: 250px;
+}
+
+.songPageHeader .songImageContainer img {
+    width: 100%;
+    height: 100%;
+    max-width: 300px;
+    max-height: 300px;
+    object-fit: cover;
+    border-radius: .5rem;
+    border: 5px solid #401B00;
+}
+
+.songPageContent {
+    flex: 1;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.songPageContent .accordion {
+    flex: 1;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.songPageContent .accordion .accordion-button span {
+    padding: 5px;
+    color: #FFF3EB;
+    font-size: 2rem;
+    background-color: #401B00;
+    background-clip: text;
+    -webkit-text-stroke-color: transparent;
+    -webkit-text-stroke-width: 8px;
+    -webkit-background-clip: text;
+}
+
+.songPageContent .accordion-button .triangle {
+    display: inline-block;
+    width: 0;
+    height: 0;
+    margin-left: 10px; /* adjust as needed */
+    border-left: 10px solid transparent; /* adjust as needed */
+    border-right: 10px solid transparent; /* adjust as needed */
+    border-top: 10px solid transparent; /* make this transparent */
+    position: relative;
+}
+
+.songPageContent .accordion-button .triangle::after {
+    content: "";
+    position: absolute;
+    top: -10px; /* adjust as needed */
+    left: -10px; /* adjust as needed */
+    width: 0;
+    height: 0;
+    border-left: 20px solid transparent; /* adjust as needed */
+    border-right: 20px solid transparent; /* adjust as needed */
+    border-top: 20px solid #FFF3EB; /* adjust as needed */
+}
+
+.songPageContent .accordion-button:hover .triangle::after {
+    border-top: 20px solid #5C6687; 
+}
+
+.songPageContent .accordion-button:hover span {
+    color: #5C6687;
+}
+
+.songPageContent .accordion-button:hover {
+    cursor: pointer;
+}
+
+.songPageContent > .accordion > button {
+    width: 90%;
+    border-radius: .5rem;
+    background: transparent;
+    border: none;
+    outline: none;
+    background-image: linear-gradient(to right, transparent, #E57B2E, 
+    transparent);
+    min-height: 3rem;
+    color: #FFF3EB;
+    font-size: 2rem;
+    font-family: 'Roboto', sans-serif;
+    font-weight: bolder;
+}
+
+.songPageContent .lyricsContainer {
+    width: 100%;
+    background-color: #FAD6BB;
+    padding: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: .5rem;
+    border-radius: .5rem;
+    border: .5rem solid #401B00;
+}
+
+.songPageContent .lyricsContainer li {
+    list-style-type: none;
+}
+
+.songPageContent .lyricsContainer li p {
+    font-size: 1.5rem;
+    color: #401B00;
+}
+
+
+.songPageContent .tabContainer {
+    width: 100%;
+
+}
+
+.songPageContent .listTab {
+    width: 90%;
+    margin-right: auto;
+    margin-left: auto;
+}
+
 .standardForm {
     background-color: #FAD6BB;
     width: 50%;
@@ -717,6 +956,26 @@ footer p {
 
     .largeNavBar li a {
         font-size: 1rem;
+    }
+
+    .songPageHeader {
+        background-image: linear-gradient(to right, transparent, #E57B2E, transparent);
+    }
+
+    .songPageHeader .songInfoContainer h1 {
+        font-size: 2rem;
+    }
+
+    .songPageHeader .songInfoContainer h2 {
+        font-size: 1.25rem;
+    }
+
+    .songPageHeader .songImageContainer {
+        justify-content: center;
+    }
+
+    .songPageContent .accordion {
+        gap: 1rem;
     }
 
     .songListContainer .musicCardVert button {

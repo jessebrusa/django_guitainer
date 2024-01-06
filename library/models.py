@@ -7,7 +7,7 @@ class Song(models.Model):
     title = models.CharField(max_length=255, unique=True)
     artist = models.CharField(max_length=255, null=True)
     lyric = models.TextField(null=True)
-    created = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    created = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
 
 
     def __str__(self):

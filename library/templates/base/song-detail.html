@@ -2,87 +2,96 @@
 
 {% block content %}
 
-    <a href="{% url 'library' %}">Back to song list</a>
+    <div class="bodyContainer">
 
-    {% if is_in_library %}
-        {% if is_favorite %}
-            <button id="favoriteButton" onclick="toggleFavorite(true)">Remove from Favorites</button>
-        {% else %}
-            <button id="favoriteButton" onclick="toggleFavorite(false)">Add to Favorites</button>
-        {% endif %}
-        <a href="{% url 'group-list' song_id=song.id %}">Add to Group</a>
-    {% endif %}
-
-    <h1>Title: {{ song.title }}</h1>
-
-    {% if song.artist %}
-        <h2>Artist: {{ song.artist }}</h2>
-    {% endif %}
-
-    {% if song.songurl.img %}
-        <img src="{{ song.songurl.img }}" alt="picture of song from google">
-    {% else %}
-        No Image Found
-    {% endif %}
-
-    <hr>
-
-
-    <div class="accordion">
-        <button class="accordion-button">Mp3</button>
-        <div class="accordion-content">
-            {% if song.songurl.mp3 %}
-                <audio controls src="{{ song.songurl.mp3 }}"></audio>
-            {% elif song.songattempt.mp3 %}
-                <p>No Mp3 Found</p>
-            {% else %}
-                <p>Get Mp3</p>
+        <div class="songPageHeader">
+            
+            {% if is_in_library %}
+                <div class="favGroupContainer">
+                    {% if is_favorite %}
+                        <button id="favoriteButton" onclick="toggleFavorite(true)">Remove from Favorites</button>
+                    {% else %}
+                        <button id="favoriteButton" onclick="toggleFavorite(false)">Add to Favorites</button>
+                    {% endif %}
+                        <a href="{% url 'group-list' song_id=song.id %}">Add to Group</a>
+                </div>    
             {% endif %}
-        </div>
-    
-        <button class="accordion-button">Karaoke</button>
-        <div class="accordion-content">
-            {% if song.songurl.karaoke %}
-                <video controls src='{{ song.songurl.karaoke }}'></video>
-            {% elif song.songattempt.karaoke %}
-                <p>No Karaoke Found</p>
-            {% else %}
-                <p>Get Karaoke</p>
+            
+
+            <div class="songInfoContainer">
+
+                <h1>{{ song.title }}</h1>
+
+                {% if song.artist %}
+                    <h2>{{ song.artist }}</h2>
+                {% endif %}
+
+            </div>
+
+            {% if song.songurl.img %}
+                <div class="songImageContainer">
+                    <img src="{{ song.songurl.img }}" alt="picture of song from google">
+                </div>
             {% endif %}
+
         </div>
 
-        <button class="accordion-button">Lyrics</button>
-        <div class="accordion-content">
-            {% if song.lyric %}
-                <li>Lyrics: {{ song.lyric|linebreaks }}</li>
-            {% elif song.songattempt.lyric %}
-                <li>No Lyrics Found</li>
-            {% else %}
-                <li>Get Lyrics</li>
-            {% endif %}
-        </div>
         
-        <button class="accordion-button">Tabs</button>
-        <div class="accordion-content">
-            {% if song.songurl.tab %}
-                <li>Tab:<embed src="{{ song.songurl.tab }}" type="application/pdf" width="100%" height="1200px"></li>
-            {% elif song.songattempt.tab %}
-                <li>No Tab Found</li>
-            {% else %}
-                <li>Get Tab</li>
-            {% endif %}
-        </div>
-    </div>
+        <div class="songPageContent">
 
-    {% if is_in_library %}
-        <button class="remove-item" data-item-id="{{ song.id }}" data-item-title="{{ song.title }}" data-item-action="remove" data-item-location="library">
-            Remove from Library
-        </button>
-    {% else %}
-        <button class="remove-item" data-item-id="{{ song.id }}" data-item-title="{{ song.title }}" data-item-action="add" data-item-location="library">
-            Add to Library
-        </button>   
-    {% endif %}
+            <div class="accordion">
+                <button class="accordion-button"><span>Mp3</span><span class="triangle"></span></button>
+                <div class="accordion-content">
+                    {% if song.songurl.mp3 %}
+                        <audio controls src="{{ song.songurl.mp3 }}"></audio>
+                    {% elif song.songattempt.mp3 %}
+                        <p>No Mp3 Found</p>
+                    {% else %}
+                        <p>Get Mp3</p>
+                    {% endif %}
+                </div>
+            
+                <button class="accordion-button"><span>Karaoke</span><span class="triangle"></span></button>
+                <div class="accordion-content videoContainer">
+                    {% if song.songurl.karaoke %}
+                        <video controls src='{{ song.songurl.karaoke }}'></video>
+                    {% elif song.songattempt.karaoke %}
+                        <p>No Karaoke Found</p>
+                    {% else %}
+                        <p>Get Karaoke</p>
+                    {% endif %}
+                </div>
+
+                <button class="accordion-button"><span>Lyrics</span><span class="triangle"></span></button>
+                <div class="accordion-content">
+                    {% if song.lyric %}
+                        <div class="lyricsContainer">
+                            <li><p>{{ song.lyric|linebreaks }}</p></li>
+                        </div>  
+                    {% elif song.songattempt.lyric %}
+                        <li>No Lyrics Found</li>
+                    {% else %}
+                        <li>Get Lyrics</li>
+                    {% endif %}
+                </div>
+                
+                <button class="accordion-button"><span>Tabs</span><span class="triangle"></span></button>
+                <div class="accordion-content tabContainer">
+                    {% if song.songurl.tab %}
+                        <li class="listTab"><embed src="{{ song.songurl.tab }}" type="application/pdf" width="100%" height="1200px"></li>
+                    {% elif song.songattempt.tab %}
+                        <li>No Tab Found</li>
+                    {% else %}
+                        <li>Get Tab</li>
+                    {% endif %}
+                </div>
+            </div>
+        
+        </div>
+
+        {% include 'base/footer.html' %}
+
+    </div>
 
     {% load static %}
     <script src="{% static 'js/main.js' %}"></script>
