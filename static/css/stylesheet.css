@@ -160,6 +160,134 @@ footer p {
     gap: 1.5rem;
 }
 
+.groupContent {
+    width: 95%;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+
+.groupContent .leftSideBar {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-width: 250px;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    gap: 2rem;
+    background-color: #F3A66E;
+    padding: .5rem;
+    border: 5px solid #401B00;
+    border-radius: .5rem;
+}
+
+.groupContent .leftSideBar h2 {
+    margin: 0;
+    padding: 0;
+    font-size: 2.5rem;
+    color: #FFF3EB;
+    background-color: #401B00;
+    background-clip: text;
+    -webkit-text-stroke-color: transparent;
+    -webkit-text-stroke-width: 8px;
+    -webkit-background-clip: text;
+    padding: .5rem;
+    text-decoration: underline;
+}
+
+.groupContent .leftSideBar ul {
+    margin: 0;
+    padding: 0;
+}
+
+.groupContent .leftSideBar li {
+    list-style-type: none;
+    margin: 0;
+    padding-left: 0;
+    font-size: 1.5rem;
+    text-align: center;
+    color: #FFF3EB;
+    background-color: #401B00;
+    background-clip: text;
+    -webkit-text-stroke-color: transparent;
+    -webkit-text-stroke-width: 5px;
+    -webkit-background-clip: text;
+}
+
+.groupContent .leftSideBar .userCard {
+    background-image: linear-gradient(to right, transparent, #B05310, transparent);
+    padding: .5rem;
+    border: 2px solid #401B00;
+    min-width: 280px;
+    border-radius: .5rem;
+}
+
+.groupContent .leftSideBar .userButtonContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 100%;
+    padding: .1rem;
+    gap: .1rem;
+}
+
+.groupContent .leftSideBar .userCard button {
+    background: none;
+    border: none;
+    font: inherit;
+    cursor: pointer;
+    outline: inherit;
+    width: 90%;
+    text-decoration: none;
+    border-radius: .5rem;
+    height: 2rem;
+    background-color: #FAD6BB;
+    color: #401B00;
+    font-size: 1rem;
+    font-weight: bolder;
+    margin: .5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: .5rem 1rem .5rem 1rem;
+}
+
+.groupContent .leftSideBar .userCard button:hover {
+    background-color: #5C6687;
+    color: #FAD6BB;
+    transform: scale(1.1);
+}
+
+.groupContent .leftSideBar .userCard button:active {
+    transform: scale(1.05);
+}
+
+.groupContent .middleBar {
+    flex: 3;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.groupContent .rightSideBar {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    min-width: 250px;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    gap: 2rem;
+    background-color: white;
+
+}
+
 .headerItems {
     display: flex;
     justify-content: space-between;
@@ -180,6 +308,19 @@ footer p {
 
 .headerItems .headerContainer h1 {
     margin-left: 3rem;
+}
+
+.headerItems .messageContainer {
+    min-width: 300px;
+    width: 40%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #FFF3EB;
+    border-radius: .5rem;
+    border: .5rem solid #401B00;
+    padding: .5rem;
+    text-align: justify;
 }
 
 .headerItems .searchContainer {
@@ -729,23 +870,23 @@ footer p {
     display: inline-block;
     width: 0;
     height: 0;
-    margin-left: 10px; /* adjust as needed */
-    border-left: 10px solid transparent; /* adjust as needed */
-    border-right: 10px solid transparent; /* adjust as needed */
-    border-top: 10px solid transparent; /* make this transparent */
+    margin-left: 10px; 
+    border-left: 10px solid transparent; 
+    border-right: 10px solid transparent; 
+    border-top: 10px solid transparent; 
     position: relative;
 }
 
 .songPageContent .accordion-button .triangle::after {
     content: "";
     position: absolute;
-    top: -10px; /* adjust as needed */
-    left: -10px; /* adjust as needed */
+    top: -10px;
+    left: -10px;
     width: 0;
     height: 0;
-    border-left: 20px solid transparent; /* adjust as needed */
-    border-right: 20px solid transparent; /* adjust as needed */
-    border-top: 20px solid #FFF3EB; /* adjust as needed */
+    border-left: 20px solid transparent; 
+    border-right: 20px solid transparent; 
+    border-top: 20px solid #FFF3EB; 
 }
 
 .songPageContent .accordion-button:hover .triangle::after {
