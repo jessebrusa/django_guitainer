@@ -87,7 +87,7 @@ DATABASES = {
     }
 }
 
-LOGIN_REDIRECT_URL = '/library/'
+LOGIN_REDIRECT_URL = '/dashboard/'
 LOGIN_URL = 'login'
 
 # Password validation
