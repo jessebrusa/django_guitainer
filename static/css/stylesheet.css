@@ -164,11 +164,21 @@ footer p {
     width: 95%;
     display: flex;
     justify-content: space-between;
-    align-items: flex-start;
-    flex-wrap: wrap;
+    align-items: flex-end;
+    flex-wrap: wrap-reverse;
+    gap: 1rem;
+    height: 100%;
 }
 
 .groupContent .leftSideBar {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.groupContent .leftSideBarUsers {
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -184,7 +194,7 @@ footer p {
     border-radius: .5rem;
 }
 
-.groupContent .leftSideBar h2 {
+.groupContent .leftSideBarUsers h2 {
     margin: 0;
     padding: 0;
     font-size: 2.5rem;
@@ -198,12 +208,12 @@ footer p {
     text-decoration: underline;
 }
 
-.groupContent .leftSideBar ul {
+.groupContent .leftSideBarUsers ul {
     margin: 0;
     padding: 0;
 }
 
-.groupContent .leftSideBar li {
+.groupContent .leftSideBarUsers li {
     list-style-type: none;
     margin: 0;
     padding-left: 0;
@@ -217,15 +227,15 @@ footer p {
     -webkit-background-clip: text;
 }
 
-.groupContent .leftSideBar .userCard {
+.groupContent .leftSideBarUsers .userCard {
     background-image: linear-gradient(to right, transparent, #B05310, transparent);
     padding: .5rem;
     border: 2px solid #401B00;
-    min-width: 280px;
+    min-width: 220px;
     border-radius: .5rem;
 }
 
-.groupContent .leftSideBar .userButtonContainer {
+.groupContent .leftSideBarUsers .userButtonContainer {
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
@@ -235,7 +245,7 @@ footer p {
     gap: .1rem;
 }
 
-.groupContent .leftSideBar .userCard button {
+.groupContent .leftSideBarUsers .userCard button {
     background: none;
     border: none;
     font: inherit;
@@ -256,13 +266,13 @@ footer p {
     padding: .5rem 1rem .5rem 1rem;
 }
 
-.groupContent .leftSideBar .userCard button:hover {
+.groupContent .leftSideBarUsers .userCard button:hover {
     background-color: #5C6687;
     color: #FAD6BB;
     transform: scale(1.1);
 }
 
-.groupContent .leftSideBar .userCard button:active {
+.groupContent .leftSideBarUsers .userCard button:active {
     transform: scale(1.05);
 }
 
@@ -274,7 +284,26 @@ footer p {
     align-items: center;
 }
 
-.groupContent .rightSideBar {
+.groupContent #favoriteHeader {
+    font-size: 4rem;
+    margin: 1rem;
+}
+
+.groupContent .groupRemove {
+    height: 3rem;
+}
+
+.groupContent .groupRemove:hover {
+    background-color: #5C6687;
+    color: #FAD6BB;
+    transform: scale(1.1);
+}
+
+.groupContent .groupRemove:active {
+    transform: scale(1.05);
+}
+
+.groupContent .leftSideBarOptions {
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -393,6 +422,8 @@ footer p {
     background: rgba(0, 0, 0, 0.5);  
 }
 
+
+
 #overlayDiv #confirmDiv {
     position: fixed;  
     top: 50%;         
@@ -509,6 +540,138 @@ footer p {
 }
 
 #overlayDiv #cancelButton:active {
+    transform: scale(1.05);
+}
+
+.overlayDivHiddenClass {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 4;  
+    background: rgba(0, 0, 0, 0.5);  
+}
+
+.overlayHideUser {
+    display: none;
+}
+
+.overlayShowUser {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.overlayHideMessage {
+    display: none;
+}
+
+.overlayShowName {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.overlayHideName {
+    display: none;
+}
+
+.overlayShowMessage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.overlayItems {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 1rem;
+    width: auto;
+    flex-wrap: wrap;
+}
+
+.overlayItems input {
+    flex: 1;
+    font-size: 1.5rem;
+    min-width: 200px;
+}
+
+.overlayItems .checkbox {
+    justify-self: flex-start;
+    flex: none;
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+.overlayItems label {
+    font-size: 2rem;
+    width: 300px;
+    display: flex;
+    justify-content: flex-end;
+    align-self: center;
+    color: #FFF3EB;
+    background-color: #401B00;
+    background-clip: text;
+    -webkit-text-stroke-color: transparent;
+    -webkit-text-stroke-width: 6px;
+    -webkit-background-clip: text;
+}
+
+.overlayItems textarea {
+    height: 200px;
+    flex: 1;
+}
+
+.overlayButtons {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 100%;
+}
+
+.overlayButtons input {
+    font-size: 1.5rem;
+    background-color: #E57B2E;
+    padding: .5rem 1rem .5rem 1rem;
+    border-radius: .5rem;
+    color: #FFF3EB;
+    font-weight: bolder;
+    margin: .5rem;
+    width: 8rem;
+    height: 3rem;
+    text-decoration: none;
+}
+
+.overlayButtons input:hover {
+    background-color: #5C6687;
+    transform: scale(1.1);
+    color: #FFF3EB;
+}
+
+.overlayButtons input:active {
+    transform: scale(1.05);
+}
+
+.overlayButtons .cancelBtn {
+    font-size: 1.5rem;
+    background-color: #5C6687;
+    border-radius: .5rem;
+    color: #FFF3EB;
+    font-weight: bolder;
+    margin: .5rem;
+    width: 8rem;
+    height: 3rem;
+    padding: .5rem 1rem .5rem 1rem;
+}
+
+.overlayButtons .cancelBtn:hover {
+    background-color: #2A324D;
+    transform: scale(1.1);
+}
+
+.overlayButtons .cancelBtn:active {
     transform: scale(1.05);
 }
 
@@ -1081,6 +1244,22 @@ footer p {
 }
 
 @media (max-width: 1250px) {
+    .favHeaderContainer {
+        width: 300px;
+    }
+
+    .groupContent #favoriteHeader {
+        font-size: 2rem;
+    }
+
+    .groupContent {
+        justify-content: center;
+    }
+
+    .headerContainer h1 {
+        text-align: center;
+    }
+
     .headerItems .searchContainer {
         margin: auto;
         justify-content: center;
