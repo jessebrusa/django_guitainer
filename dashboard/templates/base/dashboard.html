@@ -48,9 +48,11 @@
                     </li>
                 </ul>
                 <button data-song-id="{{ song.id }}" data-song-title="{{ song.title }}" class="delete-song deleteBtn">Delete Song</button>
-                {% empty %}
-                    <p>No created songs.</p>
                 {% endfor %}
+                <div class="button-container">
+                    <a href="{% url 'create-guitainer' %}" class="createSongBtn">Create Your Own Guitainer</a>
+                </div>
+                
                 
             </div>
 
