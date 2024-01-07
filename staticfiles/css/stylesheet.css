@@ -1,7 +1,38 @@
+* {
+    font-size: 20px;
+    box-sizing: border-box;
+}
+
 .accordion-content {
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.3s ease-out;
+}
+
+html {
+    height: 100%;
+    background-image: linear-gradient(to bottom right, #010012 25%, #141C38);
+    background-attachment: fixed;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+    background-color: transparent;
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.bodyContainer {
+    flex: 1;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .custom-dropdown {
@@ -11,16 +42,1340 @@
 .custom-dropdown.show {
     display: block;
 }
-/* Hide the first navbar on screens smaller than 800px */
-@media (max-width: 599px) {
-    .navbar.d-none.d-lg-block {
-        display: none !important;
+
+.dashboardContainer {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: flex-start;
+    flex-wrap: wrap;
+
+}
+
+.dashboardContainer > div {
+    flex: 1;
+    margin: 1.5rem;
+    min-width: 380px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.dashboardContainer > div > .headerContainer h2 {
+    text-decoration: underline;
+    font-size: 2rem;
+    color: #FFF3EB;
+    font-weight: bolder;
+    background-color: #401B00;
+    background-clip: text;
+    -webkit-text-stroke-color: transparent;
+    -webkit-text-stroke-width: 8px;
+    -webkit-background-clip: text;
+}
+
+.dashboardContainer .groupName {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+}
+
+.dashboardContainer .deleteBtn {
+    font-size: 1rem;
+    background-color: #BA1C1C;
+    border-radius: .5rem;
+    color: #FFE5E5;
+    font-weight: bolder;
+    margin: .5rem;
+    margin-top: -1rem;
+    width: 8rem;
+    height: 2rem;
+    padding: .5rem 1rem .5rem 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 5;
+}
+
+.dashboardContainer .deleteBtn:hover {
+    background-color: #610505;
+    transform: scale(1.1);
+}
+
+.dashboardContainer .deleteBtn:active {
+    transform: scale(1.05);
+}
+
+.dashboardContainer .button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+    margin: .5rem;
+    margin-top: -1rem;
+}
+
+.dashboardContainer .button-container a {
+    text-decoration: none;
+    border-radius: .5rem;
+    height: 2rem;
+    background-color: #FAD6BB;
+    color: #401B00;
+    font-size: 1rem;
+    font-weight: bolder;
+    margin: .5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: .5rem 1rem .5rem 1rem;
+}
+
+.dashboardContainer .button-container a:hover {
+    background-color: #5C6687;
+    transform: scale(1.1);
+}
+
+.dashboardContainer .button-container a:active {
+    transform: scale(1.05);
+}
+
+footer { 
+    width: 100%;
+    height: 60px;
+    background-image: linear-gradient(to right, transparent, #141C38 70%, transparent);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #EBEFFF;
+}
+
+footer p {
+    margin: 1rem;
+    font-size: 1rem;
+}
+
+.gap25 {
+    gap: 1.5rem;
+}
+
+.groupContent {
+    width: 95%;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-wrap: wrap-reverse;
+    gap: 1rem;
+    height: 100%;
+}
+
+.groupContent .leftSideBar {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.groupContent .leftSideBarUsers {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-width: 250px;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    gap: 2rem;
+    background-color: #F3A66E;
+    padding: .5rem;
+    border: 5px solid #401B00;
+    border-radius: .5rem;
+}
+
+.groupContent .leftSideBarUsers h2 {
+    margin: 0;
+    padding: 0;
+    font-size: 2.5rem;
+    color: #FFF3EB;
+    background-color: #401B00;
+    background-clip: text;
+    -webkit-text-stroke-color: transparent;
+    -webkit-text-stroke-width: 8px;
+    -webkit-background-clip: text;
+    padding: .5rem;
+    text-decoration: underline;
+}
+
+.groupContent .leftSideBarUsers ul {
+    margin: 0;
+    padding: 0;
+}
+
+.groupContent .leftSideBarUsers li {
+    list-style-type: none;
+    margin: 0;
+    padding-left: 0;
+    font-size: 1.5rem;
+    text-align: center;
+    color: #FFF3EB;
+    background-color: #401B00;
+    background-clip: text;
+    -webkit-text-stroke-color: transparent;
+    -webkit-text-stroke-width: 5px;
+    -webkit-background-clip: text;
+}
+
+.groupContent .leftSideBarUsers .userCard {
+    background-image: linear-gradient(to right, transparent, #B05310, transparent);
+    padding: .5rem;
+    border: 2px solid #401B00;
+    min-width: 220px;
+    border-radius: .5rem;
+}
+
+.groupContent .leftSideBarUsers .userButtonContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 100%;
+    padding: .1rem;
+    gap: .1rem;
+}
+
+.groupContent .leftSideBarUsers .userCard button {
+    background: none;
+    border: none;
+    font: inherit;
+    cursor: pointer;
+    outline: inherit;
+    width: 90%;
+    text-decoration: none;
+    border-radius: .5rem;
+    height: 2rem;
+    background-color: #FAD6BB;
+    color: #401B00;
+    font-size: 1rem;
+    font-weight: bolder;
+    margin: .5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: .5rem 1rem .5rem 1rem;
+}
+
+.groupContent .leftSideBarUsers .userCard button:hover {
+    background-color: #5C6687;
+    color: #FAD6BB;
+    transform: scale(1.1);
+}
+
+.groupContent .leftSideBarUsers .userCard button:active {
+    transform: scale(1.05);
+}
+
+.groupContent .middleBar {
+    flex: 3;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.groupContent #favoriteHeader {
+    font-size: 4rem;
+    margin: 1rem;
+}
+
+.groupContent .groupRemove {
+    height: 3rem;
+}
+
+.groupContent .groupRemove:hover {
+    background-color: #5C6687;
+    color: #FAD6BB;
+    transform: scale(1.1);
+}
+
+.groupContent .groupRemove:active {
+    transform: scale(1.05);
+}
+
+.groupContent .leftSideBarOptions {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    min-width: 250px;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    gap: 2rem;
+}
+
+.groupContent .leftSideBarOptions button {
+    background: none;
+    color: inherit;
+    border: none;
+    padding: .5rem;
+    font: inherit;
+    cursor: pointer;
+    outline: inherit;
+    background-image: linear-gradient(to right, transparent, #E57B2E, transparent);
+    width: 100%;
+    color: #FFF3EB;
+    font-size: 1.5rem;
+    font-weight: bolder;
+    -webkit-text-stroke: 1px #401B00;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.groupContent .leftSideBarOptions button:hover {
+    transform: scale(1.1) translate(20px, -5px);
+    box-shadow: -5px 0px 10px rgba(0, 0, 0, 0.2);
+}
+
+.groupContent .leftSideBarOptions button:active {
+    transform: scale(1.05);
+}
+
+.headerItems {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 1rem;
+    flex-wrap: wrap;
+}
+
+.headerItems .headerContainer {
+    width: 50%;
+    min-width: 350px;
+    text-align: left;
+    margin: 1rem 0;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.headerItems .headerContainer h1 {
+    margin-left: 3rem;
+}
+
+.headerItems .messageContainer {
+    min-width: 300px;
+    width: 40%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #FFF3EB;
+    border-radius: .5rem;
+    border: .5rem solid #401B00;
+    padding: .5rem;
+    text-align: justify;
+}
+
+.headerItems .searchContainer {
+    margin-right: 1rem;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: .5rem;
+    min-width: 300px;
+    flex-wrap: wrap;
+}
+
+.headerItems .searchContainer input {
+    background-color: #FFF3EB;
+    border-radius: 2rem;
+    font-size: 2.5rem;
+    text-indent: 1rem;
+}
+
+.headerItems .searchContainer button {
+    font-size: 1rem;
+    background-color: #E57B2E;
+    padding: .5rem 1rem .5rem 1rem;
+    border-radius: .5rem;
+    color: #FFF3EB;
+    font-weight: bolder;
+}
+
+.headerItems .searchContainer button:hover {
+    background-color: #5C6687;
+    transform: scale(1.1);
+}
+
+.headerItems .searchContainer button:active {
+    transform: scale(1.05);
+}
+
+.headerContainer {
+    background-image: linear-gradient(to right, transparent, rgba(229, 123, 46, .8) 40%, transparent);
+    width: 80%;
+    text-align: center;
+    color: #FFF3EB;
+    text-shadow: -3px 0 #401B00, 0 3px #401B00, 3px 0 #401B00, 0 -3px #401B00;
+    margin-top: 2rem;
+}
+
+.headerContainer h1 {
+    font-size: 5rem;
+    margin: 0;
+    padding: 2rem;
+}
+
+.loader {
+    border: 1.2rem solid #f3f3f3; 
+    border-top: 1.2rem solid #E57B2E; 
+    border-radius: 50%;
+    width: 7.5rem;
+    height: 7.5rem;
+    animation: spin 2s linear infinite;
+    opacity: 0;
+}
+
+#overlayDiv {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 4;  
+    background: rgba(0, 0, 0, 0.5);  
+}
+
+
+
+#overlayDiv #confirmDiv {
+    position: fixed;  
+    top: 50%;         
+    left: 50%;       
+    transform: translate(-50%, -50%);
+    display: flex;    
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem; 
+    background: #FFE5E5;  
+    border: 5px solid #401B00; 
+    display: flex;    
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+}
+
+#overlayDiv #confirmDivAdd {
+    position: fixed;  
+    top: 50%;         
+    left: 50%;       
+    transform: translate(-50%, -50%);
+    background-color: #EDFFEB;
+    border: 5px solid #401B00;
+    display: flex;    
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    display: flex;    
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+}
+
+#overlayDiv #confirmDivAdd #confirmButtonYes {
+    background-color: #40CC29;
+    border-radius: .5rem;
+    color: #FFE5E5;
+    font-weight: bolder;
+    margin: .5rem;
+    width: 8rem;
+    padding: .5rem 1rem .5rem 1rem;
+    font-size: 1.5rem
+}
+
+#overlayDiv .confirmText {
+    font-size: 2rem;
+    margin: .5rem;
+    padding: 0;
+    color: #401B00;
+    text-align: center;
+    font-weight: bolder;
+}
+
+#overlayDiv #confirmDiv #confirmButtonYes {
+    font-size: 1.5rem;
+    background-color: #BA1C1C;
+    border-radius: .5rem;
+    color: #FFE5E5;
+    font-weight: bolder;
+    margin: .5rem;
+    width: 8rem;
+    padding: .5rem 1rem .5rem 1rem;
+}
+
+#overlayDiv #confirmButtonYesAdd {
+    background-color: #40CC29;
+    border-radius: .5rem;
+    color: #FFE5E5;
+    font-weight: bolder;
+    margin: .5rem;
+    width: 8rem;
+    padding: .5rem 1rem .5rem 1rem;
+    font-size: 1.5rem;
+
+}
+
+#overlayDiv #confirmButtonYes:hover {
+    background-color: #610505;
+    transform: scale(1.1);
+}   
+
+#overlayDiv #confirmButtonYes:active {
+    transform: scale(1.05);
+}
+
+#overlayDiv #confirmButtonYesAdd:hover {
+    background-color: #115C05;
+    transform: scale(1.1);
+}
+
+#overlayDiv #confirmButtonYesAdd:active {
+    transform: scale(1.05);
+}   
+
+#overlayDiv #cancelButton {
+    font-size: 1.5rem;
+    background-color: #5C6687;
+    border-radius: .5rem;
+    color: #FFF3EB;
+    font-weight: bolder;
+    margin: .5rem;
+    width: 8rem;
+    padding: .5rem 1rem .5rem 1rem;
+}
+
+#overlayDiv #cancelButton:hover {
+    background-color: #2A324D;
+    transform: scale(1.1);
+}
+
+#overlayDiv #cancelButton:active {
+    transform: scale(1.05);
+}
+
+.overlayDivHiddenClass {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 4;  
+    background: rgba(0, 0, 0, 0.5);  
+}
+
+.overlayHideUser {
+    display: none;
+}
+
+.overlayShowUser {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.overlayHideMessage {
+    display: none;
+}
+
+.overlayShowName {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.overlayHideName {
+    display: none;
+}
+
+.overlayShowMessage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.overlayItems {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 1rem;
+    width: auto;
+    flex-wrap: wrap;
+}
+
+.overlayItems input {
+    flex: 1;
+    font-size: 1.5rem;
+    min-width: 200px;
+}
+
+.overlayItems .checkbox {
+    justify-self: flex-start;
+    flex: none;
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+.overlayItems label {
+    font-size: 2rem;
+    width: 300px;
+    display: flex;
+    justify-content: flex-end;
+    align-self: center;
+    color: #FFF3EB;
+    background-color: #401B00;
+    background-clip: text;
+    -webkit-text-stroke-color: transparent;
+    -webkit-text-stroke-width: 6px;
+    -webkit-background-clip: text;
+}
+
+.overlayItems textarea {
+    height: 200px;
+    flex: 1;
+}
+
+.overlayButtons {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 100%;
+}
+
+.overlayButtons input {
+    font-size: 1.5rem;
+    background-color: #E57B2E;
+    padding: .5rem 1rem .5rem 1rem;
+    border-radius: .5rem;
+    color: #FFF3EB;
+    font-weight: bolder;
+    margin: .5rem;
+    width: 8rem;
+    height: 3rem;
+    text-decoration: none;
+}
+
+.overlayButtons input:hover {
+    background-color: #5C6687;
+    transform: scale(1.1);
+    color: #FFF3EB;
+}
+
+.overlayButtons input:active {
+    transform: scale(1.05);
+}
+
+.overlayButtons .cancelBtn {
+    font-size: 1.5rem;
+    background-color: #5C6687;
+    border-radius: .5rem;
+    color: #FFF3EB;
+    font-weight: bolder;
+    margin: .5rem;
+    width: 8rem;
+    height: 3rem;
+    padding: .5rem 1rem .5rem 1rem;
+}
+
+.overlayButtons .cancelBtn:hover {
+    background-color: #2A324D;
+    transform: scale(1.1);
+}
+
+.overlayButtons .cancelBtn:active {
+    transform: scale(1.05);
+}
+
+.songListContainerHor {
+    width: 100%;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+}
+
+.songListContainerHor .musicCardHor:hover {
+    cursor: pointer;
+    transform: scale(1.05);
+}
+
+.songListContainerHor .musicCardHor:active {
+    transform: scale(1.01);
+}
+
+.songListContainerHor a {
+    display: flex;
+    width: 100%;
+    height: 100%;
+}
+
+.songListContainerHor .musicCardHor {
+    width: 100%;
+    min-width: 350px;
+    height: 125px;
+    background-color: #E57B2E;
+    border-radius: 1rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    box-shadow: -10px -10px 20px rgba(0, 0, 0, 0.8);
+    transition: transform 0.3s ease, box-shadow 0.3s ease; 
+    border: 5px solid #401B00;
+
+}
+
+.songListContainerHor img {
+    min-width: 100px;
+    height: 100%;
+    object-fit: cover;
+    border-top-left-radius: .6rem;
+    border-bottom-left-radius: .6rem;
+    flex: 1;
+    margin-left: -10px;
+}
+
+.songListContainerHor .titleArtist {
+    flex: 3;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.songListContainerHor .titleArtist p {
+    margin: 0;
+    padding: 0;
+    font-size: .75rem;
+}
+
+.songListContainerHor .titleArtist .title {
+    font-size: 1.2rem;
+    margin: 0;
+    padding: 0;
+    color: #FFF3EB;
+}
+
+.songListContainerHor .musicCardHor:hover .title {
+    color: #5C6687;
+
+}
+
+.songListContainerHor .musicCardHor .acceptDecline {
+    flex: 1;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    gap: .5rem;
+}
+
+.songListContainerHor .musicCardHor .acceptDecline button {
+    width: 100px;
+}
+
+.songListContainerHor .musicCardHor .acceptDecline .greenBtn {
+    background-color: #27AB11;
+    color: #EDFFEB;
+}
+
+.songListContainerHor .musicCardHor .acceptDecline .greenBtn:hover {
+    background-color: #115C05;
+    transform: scale(1.1);
+}
+
+.songListContainerHor .musicCardHor .acceptDecline .greenBtn:active {
+    transform: scale(1.05);
+}
+
+.songListContainerHor button {
+    border-radius: .5rem;
+    height: 2rem;
+    background-color: #FAD6BB;
+    color: #401B00;
+    font-size: 1rem;
+    font-weight: bolder;
+    margin: .5rem;
+}
+
+.songListContainerVert {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    padding: 1rem;
+    overflow-x: hidden;
+}
+
+.songListContainerVert .musicCardVert {
+    width: 300px;
+    height: 325px;
+    background-color: #E57B2E;
+    border-radius: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    box-shadow: -10px -10px 20px rgba(0, 0, 0, 0.8);
+    transition: transform 0.3s ease, box-shadow 0.3s ease; 
+    border: 5px solid #401B00;
+}
+
+.songListContainerVert .musicCardVert:hover {
+    transform: translateX(30px) translateY(-20px); 
+    box-shadow: -40px 40px 60px rgba(0, 0, 0, 0.8);
+}
+
+.songListContainerVert .musicCardVert button {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2rem;
+    display: none;
+    z-index: 1; 
+    border-top-left-radius: .5rem;
+    border-top-right-radius: .5rem;
+    background-color: #FAD6BB;
+    color: #401B00;
+    font-size: 1rem;
+    font-weight: bolder;
+}
+
+.songListContainerVert .musicCardVert:hover button {
+    display: block; 
+}
+
+.songListContainerVert .musicCardVert button:hover {
+    background-color: #5C6687;
+    color: #FFF3EB;
+    transform: scale(1.1);
+}
+
+.songListContainerVert .musicCardVert button:active {
+    transform: scale(1.05);
+}
+
+.songListContainerVert .musicCardVert p {
+    font-size: 1.25rem;
+    margin: 0;
+    padding: 1rem;
+    color: #FFF3EB;
+}
+
+.songListContainerVert .musicCardVert img {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-top-left-radius: .5rem;
+    border-top-right-radius: .5rem;
+    border-bottom-right-radius: .25rem;
+    border-bottom-left-radius: .25rem;
+}
+
+.songPageHeader {
+    margin: 1.5rem;
+    width: 98%;
+    min-height: 300px;
+    background-image: linear-gradient(to right, #E57B2E, transparent 90%);
+    border-radius: .5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap-reverse;
+}
+
+.songPageHeader .favGroupContainer {
+    flex: 1;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    min-width: 250px;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    gap: 2rem;
+}
+
+.songPageHeader .favGroupContainer button {
+    width: 100%;
+    border-radius: .5rem;
+    background: transparent;
+    border: none;
+    outline: none;
+    background-image: linear-gradient(to right, transparent, #2A324D, 
+    #2A324D, transparent);
+    min-height: 3rem;
+    color: #FFF3EB;
+    font-size: 2rem;
+    font-family: 'Roboto', sans-serif;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.5s ease;
+}
+
+.songPageHeader .favGroupContainer button:hover {
+    transform: translate(1.25rem, -.5rem) scale(1.1);
+    box-shadow: -10px 10px 20px rgba(0, 0, 0, 0.8);
+    background-color: #2A324D;
+}
+
+.songPageHeader .favGroupContainer button:active {
+    transform: scale(1.05);
+}
+
+.songPageHeader .favGroupContainer a {
+    width: 100%;
+    border-radius: .5rem;
+    background-image: linear-gradient(to right, transparent, #2A324D, 
+    #2A324D, transparent);
+    min-height: 3rem;
+    color: #FFF3EB;
+    font-size: 2rem;
+    font-family: 'Roboto', sans-serif;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.5s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+}
+
+.songPageHeader .favGroupContainer a:hover {
+    transform: translate(1.25rem, -.5rem) scale(1.1);
+    box-shadow: -10px 10px 20px rgba(0, 0, 0, 0.8);
+    background-color: #2A324D;
+}
+
+.songPageHeader .favGroupContainer a:active {
+    transform: scale(1.05);
+}
+
+.songPageHeader .songInfoContainer {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    min-width: 380px;
+}
+
+.songPageHeader .songInfoContainer h1 {
+    font-size: 3.25rem;
+    font-weight: bolder;
+    text-align: center;
+    color: #FFF3EB;
+    background-color: #401B00;
+    background-clip: text;
+    -webkit-text-stroke-color: transparent;
+    -webkit-text-stroke-width: 8px;
+    -webkit-background-clip: text;
+}
+
+.songPageHeader .songInfoContainer h2 {
+    font-size: 2.5rem;
+    font-weight: bolder;
+    text-align: center;
+    color: #401B00;
+    background-color: #FFF3EB;
+    background-clip: text;
+    -webkit-text-stroke-color: transparent;
+    -webkit-text-stroke-width: 4px;
+    -webkit-background-clip: text;
+}
+
+.songPageHeader .songImageContainer {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    min-width: 250px;
+}
+
+.songPageHeader .songImageContainer img {
+    width: 100%;
+    height: 100%;
+    max-width: 300px;
+    max-height: 300px;
+    object-fit: cover;
+    border-radius: .5rem;
+    border: 5px solid #401B00;
+}
+
+.songPageContent {
+    flex: 1;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.songPageContent .accordion {
+    flex: 1;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.songPageContent .accordion .accordion-button span {
+    padding: 5px;
+    color: #FFF3EB;
+    font-size: 2rem;
+    background-color: #401B00;
+    background-clip: text;
+    -webkit-text-stroke-color: transparent;
+    -webkit-text-stroke-width: 8px;
+    -webkit-background-clip: text;
+}
+
+.songPageContent .accordion-button .triangle {
+    display: inline-block;
+    width: 0;
+    height: 0;
+    margin-left: 10px; 
+    border-left: 10px solid transparent; 
+    border-right: 10px solid transparent; 
+    border-top: 10px solid transparent; 
+    position: relative;
+}
+
+.songPageContent .accordion-button .triangle::after {
+    content: "";
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    width: 0;
+    height: 0;
+    border-left: 20px solid transparent; 
+    border-right: 20px solid transparent; 
+    border-top: 20px solid #FFF3EB; 
+}
+
+.songPageContent .accordion-button:hover .triangle::after {
+    border-top: 20px solid #5C6687; 
+}
+
+.songPageContent .accordion-button:hover span {
+    color: #5C6687;
+}
+
+.songPageContent .accordion-button:hover {
+    cursor: pointer;
+}
+
+.songPageContent > .accordion > button {
+    width: 90%;
+    border-radius: .5rem;
+    background: transparent;
+    border: none;
+    outline: none;
+    background-image: linear-gradient(to right, transparent, #E57B2E, 
+    transparent);
+    min-height: 3rem;
+    color: #FFF3EB;
+    font-size: 2rem;
+    font-family: 'Roboto', sans-serif;
+    font-weight: bolder;
+}
+
+.songPageContent .lyricsContainer {
+    width: 100%;
+    background-color: #FAD6BB;
+    padding: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: .5rem;
+    border-radius: .5rem;
+    border: .5rem solid #401B00;
+}
+
+.songPageContent .lyricsContainer li {
+    list-style-type: none;
+}
+
+.songPageContent .lyricsContainer li p {
+    font-size: 1.5rem;
+    color: #401B00;
+}
+
+
+.songPageContent .tabContainer {
+    width: 100%;
+
+}
+
+.songPageContent .listTab {
+    width: 90%;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.standardForm {
+    background-color: #FAD6BB;
+    width: 50%;
+    min-width: 380px;
+    font-size: 2rem;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    border-radius: 1rem;
+    border: .5rem solid #401B00;
+}
+
+.standardFormBottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.standardFormBottomRight {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.standardForm button {
+    align-self: center;
+    font-size: 2.5rem;
+    margin: 1rem 0 1rem 0;
+    background-color: #E57B2E;
+    padding: .5rem 1rem .5rem 1rem;
+    border-radius: .5rem;
+    color: #FFF3EB;
+    font-weight: bolder;
+}
+
+.standardForm button:hover {
+    background-color: #5C6687;
+    transform: scale(1.1);
+}
+
+.standardForm button:active {
+    transform: scale(1.05);
+}
+
+.standardForm .checkboxContainer {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: .5rem;
+}
+
+.standardForm .checkboxContainer label {
+    font-size: 2.5rem;
+    display: inline-block;
+    width: 11rem;
+    text-align: right;
+    background-color: #401B00;
+    background-clip: text;
+    -webkit-text-stroke-color: transparent;
+    -webkit-text-stroke-width: 8px;
+    -webkit-background-clip: text;
+    color: #FFF3EB;
+    font-weight: bolder;
+}
+
+.standardForm .checkboxContainer input {
+    width: 2rem;
+    height: 2rem;
+    margin: 1rem 0 1rem 0;
+}
+
+.standardForm .rowItems {
+    width: 100%;
+    display: flex;
+    gap: .25rem;
+    margin: 1rem 0 1rem 0;
+    flex-wrap: wrap;
+}
+
+.standardForm .rowItems .inputBar {
+    flex: 1;
+    background-color: #FFF3EB;
+    border-radius: .5rem;
+    height: 3rem;
+    font-size: 2.5rem;
+    min-width: 10rem;
+    align-self: center;
+}
+
+.standardForm .rowItems .inputFile {
+    flex: 1;
+    font-size: 2rem;
+    min-width: 10rem;
+    align-self: center;
+
+}
+
+.standardForm .rowItems .inputText {
+    flex: 1;
+    background-color: #FFF3EB;
+    border-radius: .5rem;
+    height: 10rem;
+    font-size: 2.5rem;
+    min-width: 10rem;
+    align-self: center;
+}
+
+.standardForm .rowItems label {
+    display: inline-block;
+    width: 11rem;
+    font-size: 2.5rem;
+    text-align: right;
+    background-color: #401B00;
+    background-clip: text;
+    -webkit-text-stroke-color: transparent;
+    -webkit-text-stroke-width: 8px;
+    -webkit-background-clip: text;
+    color: #FFF3EB;
+    font-weight: bolder;
+    padding: .25rem;
+}
+
+
+.standardForm .rowItems .loginRegisterLabel {
+    width: 14rem;
+}
+
+@media (max-width: 1250px) {
+    .favHeaderContainer {
+        width: 300px;
+    }
+
+    .groupContent #favoriteHeader {
+        font-size: 2rem;
+    }
+
+    .groupContent {
+        justify-content: center;
+    }
+
+    .headerContainer h1 {
+        text-align: center;
+    }
+
+    .headerItems .searchContainer {
+        margin: auto;
+        justify-content: center;
+    }
+    
+    .headerItems {
+        justify-content: center;
+    }
+    
+    .headerItems .headerContainer h1 {
+        margin: 0;
+        font-size: 3.5rem;
+    }
+
+    .largeNavBar li a {
+        font-size: 1rem;
+    }
+
+    .songPageHeader {
+        background-image: linear-gradient(to right, transparent, #E57B2E, transparent);
+    }
+
+    .songPageHeader .songInfoContainer h1 {
+        font-size: 2rem;
+    }
+
+    .songPageHeader .songInfoContainer h2 {
+        font-size: 1.25rem;
+    }
+
+    .songPageHeader .songImageContainer {
+        justify-content: center;
+    }
+
+    .songPageContent .accordion {
+        gap: 1rem;
+    }
+
+    .songListContainer .musicCardVert button {
+        display: block;
     }
 }
 
-/* Hide the second navbar on screens larger than 800px */
-@media (min-width: 600px) {
-    .navbar.d-lg-none {
+
+@media (max-width: 899px) {
+    .catalogueHeader {
+        font-size: 3rem !important;
+    }
+
+    .navbar.d-none.d-lg-block {
         display: none !important;
     }
+
+    .loader {
+        width: 4.5rem;
+        height: 4.5rem;
+    }
+    
+    .headerItems .searchContainer input {
+        font-size: 1.5rem;
+    }
+
+    .songListContainer {
+        flex-direction: column;
+    }
+
+    .songListContainerVert {
+        display: none;
+    }
+
+    .songListContainerHor {
+        display: flex;
+    }
+    
+    .headerContainer .dashboardHeader {
+        font-size: 2rem;
+    
+    }
+}
+
+@media (min-width: 900px) {
+    .navbar.d-lg-none {
+        display: none !important;
+    }  
+
+    .songListContainerHor {
+        display: none;
+    }
+}
+
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }

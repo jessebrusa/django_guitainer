@@ -7,10 +7,15 @@ function handleItemRemoval(csrf_token) {
             var itemLocation = this.dataset.itemLocation;
 
             let body = document.body;
+            let overlayDiv = document.createElement('div');
+            overlayDiv.id = 'overlayDiv';
             let confirmDiv = document.createElement('div');
+            confirmDiv.id = 'confirmDiv';
             let confirmText = document.createElement('p');
+            confirmText.classList.add('confirmText');
             if (itemAction === 'add') {
                 confirmText.textContent = `Are you sure you want to add ${itemTitle} to ${itemLocation}?`;
+                confirmDiv.id = 'confirmDivAdd';
             } 
             else {
                 confirmText.textContent = `Are you sure you want to remove ${itemTitle} from ${itemLocation}?`;
@@ -20,9 +25,11 @@ function handleItemRemoval(csrf_token) {
             confirmButtonYes.textContent = 'Yes';
             confirmButtonYes.id = 'confirmButtonYes';
             let confirmButtonNo = document.createElement('button');
-            confirmButtonNo.textContent = 'No';
+            confirmButtonNo.id = 'cancelButton'
+            confirmButtonNo.textContent = 'Cancel';
 
-            body.appendChild(confirmDiv);
+            body.appendChild(overlayDiv);
+            overlayDiv.appendChild(confirmDiv);
             confirmDiv.appendChild(confirmText);
             confirmDiv.appendChild(buttonDiv);
             buttonDiv.appendChild(confirmButtonYes);
@@ -30,6 +37,7 @@ function handleItemRemoval(csrf_token) {
             
             if (itemAction === 'add') {
                 postUrl = '/add-to-library/';
+                confirmButtonYes.id = 'confirmButtonYesAdd';
             }
             else {
                 postUrl = '/remove-from-library/';
@@ -62,28 +70,41 @@ function handleItemRemoval(csrf_token) {
                         location.reload();
                     }
                 });
+                overlayDiv.remove();
                 confirmDiv.remove();
             });
 
             confirmButtonNo.addEventListener('click', function() {
+                overlayDiv.remove();
                 confirmDiv.remove();
             }); 
         })
     });
 }
 
-function createConfirmationDialog(text, url, csrftoken, redirect) {
+function createConfirmationDialog(text, url, csrftoken, redirect, color) {
     let body = document.body;
+    let overlayDiv = document.createElement('div');
+    overlayDiv.id = 'overlayDiv';
     let confirmDiv = document.createElement('div');
+    confirmDiv.id = 'confirmDiv';
     let confirmText = document.createElement('p');
+    confirmText.classList.add('confirmText');
     confirmText.textContent = text;
     let buttonDiv = document.createElement('div');
     let confirmButtonYes = document.createElement('button');
+    confirmButtonYes.id = 'confirmButtonYes';
     confirmButtonYes.textContent = 'Yes';
     let confirmButtonNo = document.createElement('button');
+    confirmButtonNo.id = 'cancelButton'
     confirmButtonNo.textContent = 'No';
 
-    body.appendChild(confirmDiv);
+    if (color === 'green') {
+        confirmDiv.id = 'confirmDivAdd';
+    }
+
+    body.appendChild(overlayDiv);
+    overlayDiv.appendChild(confirmDiv);
     confirmDiv.appendChild(confirmText);
     confirmDiv.appendChild(buttonDiv);
     buttonDiv.appendChild(confirmButtonYes);
@@ -101,7 +122,8 @@ function createConfirmationDialog(text, url, csrftoken, redirect) {
             return response.json()
         }).then(function(data) {
             if (redirect === 'stay') {
-                location.reload(); 
+                location.reload();
+
             } else {
                 window.location.href = '/library/'; 
             }
@@ -110,18 +132,24 @@ function createConfirmationDialog(text, url, csrftoken, redirect) {
 
 
     confirmButtonNo.addEventListener('click', function() {
-        body.removeChild(confirmDiv);
+        body.removeChild(overlayDiv);
     });
 }
 
 
-document.getElementById('dropdownButton').addEventListener('click', function() {
-    var dropdownMenu = document.getElementById('dropdownMenu');
-    dropdownMenu.classList.toggle('show');
-});
-
+let dropdownButton = document.getElementById('dropdownButton')
+if (dropdownButton) {
+    dropdownButton.addEventListener('click', function() {
+        var dropdownMenu = document.getElementById('dropdownMenu');
+        dropdownMenu.classList.toggle('show');
+    });
+}
 
 async function fetchUrls(urls, imgUrl, lyricsUrl, mp3Url, karaokeUrl, tabUrl) {
+    let lyricsLabel = document.getElementById('lyricsLabel');
+    let mp3Label = document.getElementById('mp3Label');
+    let karaokeLabel = document.getElementById('karaokeLabel');
+    let tabLabel = document.getElementById('tabLabel');
     var promises = urls.map(async url => {
         if (url !== null) {
             try {
@@ -138,27 +166,35 @@ async function fetchUrls(urls, imgUrl, lyricsUrl, mp3Url, karaokeUrl, tabUrl) {
                 } else if (url === lyricsUrl) {
                     if (response.ok) {
                         console.log('Lyrics success');
+                        lyricsLabel.style.color = '#27AB11';
                     } else {
                         console.log('Lyrics failure');
+                        lyricsLabel.style.color = '#8C0E0E';
                     }
                 } else if (url === mp3Url) {
                     if (response.ok) {
                         console.log('Mp3 success');
+                        mp3Label.style.color = '#27AB11';
                     } else {
                         console.log('Mp3 failure');
+                        mp3Label.style.color = '#8C0E0E';
                     }
                 } else if (url === karaokeUrl) {
                     if (response.ok) {
                         console.log('Karaoke success');
+                        karaokeLabel.style.color = '#27AB11';
                     } else {
                         console.log('Karaoke failure');
+                        karaokeLabel.style.color = '#8C0E0E';
                     }
                 }
                 else if (url === tabUrl) {
                     if (response.ok) {
                         console.log('Tab success');
+                        tabLabel.style.color = '#27AB11';
                     } else {
                         console.log('Tab failure');
+                        tabLabel.style.color = '#8C0E0E';
                     }
                 }
 
